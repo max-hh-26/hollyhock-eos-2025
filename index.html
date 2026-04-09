@@ -10,83 +10,81 @@
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
-  .hh-wrap { font-family: 'Montserrat', sans-serif; background: #F3F3EB; padding: 2rem; }
-  .hh-divider { border: none; border-top: 1.5px solid #d0cfc8; margin: 2.5rem 0; }
-  .hh-section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #427C7D; margin-bottom: 0.5rem; }
-  .hh-section-title { font-size: 22px; font-weight: 600; color: #233C4D; margin: 0 0 1.5rem; }
-  .hh-cards-3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin-bottom: 1.25rem; }
-  .hh-card { background: #fff; border-radius: 12px; padding: 1rem 1.25rem; border: 0.5px solid #d0cfc8; }
-  .hh-card-label { font-size: 11px; color: #427C7D; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
-  .hh-card-val { font-size: 26px; font-weight: 600; color: #233C4D; line-height: 1.1; }
-  .hh-card-sub { font-size: 11px; color: #888; margin-top: 2px; }
-  .hh-chart-wrap { background: #fff; border-radius: 12px; padding: 1.25rem 1.5rem; border: 0.5px solid #d0cfc8; margin-bottom: 1.25rem; }
-  .hh-chart-title { font-size: 13px; font-weight: 600; color: #233C4D; margin-bottom: 0.25rem; }
-  .hh-chart-sub { font-size: 11px; color: #888; margin-bottom: 1rem; }
-  .hh-row { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 12px; margin-bottom: 1.25rem; }
-  .hh-theme-box { background: #E2E5D6; border-radius: 10px; padding: 0.75rem 1rem; margin-top: 0.75rem; }
-  .hh-theme-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #427C7D; margin-bottom: 4px; }
-  .hh-theme-text { font-size: 11px; color: #233C4D; line-height: 1.5; }
-  .hh-callout { background: #233C4D; border-radius: 10px; padding: 0.75rem 1rem; margin-top: 0.75rem; }
-  .hh-callout-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #D6AD60; margin-bottom: 6px; }
-  .hh-callout-text { font-size: 11px; color: #E2E5D6; line-height: 1.5; }
+  .hh-wrap { font-family: 'Montserrat', sans-serif; background: #F3F3EB; padding: 2.5rem; }
+  .hh-divider { border: none; border-top: 1.5px solid #d0cfc8; margin: 3rem 0; }
+  .hh-section-label { font-size: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #427C7D; margin-bottom: 0.5rem; }
+  .hh-section-title { font-size: 28px; font-weight: 600; color: #233C4D; margin: 0 0 1.5rem; }
+  .hh-cards-3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 15px; margin-bottom: 1.25rem; }
+  .hh-card { background: #fff; border-radius: 15px; padding: 1rem 1.25rem; border: 0.5px solid #d0cfc8; }
+  .hh-card-label { font-size: 14px; color: #427C7D; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 5px; }
+  .hh-card-val { font-size: 33px; font-weight: 600; color: #233C4D; line-height: 1.1; }
+  .hh-card-sub { font-size: 14px; color: #888; margin-top: 2px; }
+  .hh-chart-wrap { background: #fff; border-radius: 15px; padding: 1.25rem 1.5rem; border: 0.5px solid #d0cfc8; margin-bottom: 1.25rem; }
+  .hh-chart-title { font-size: 16px; font-weight: 600; color: #233C4D; margin-bottom: 0.25rem; }
+  .hh-chart-sub { font-size: 14px; color: #888; margin-bottom: 1rem; }
+  .hh-row { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 15px; margin-bottom: 1.25rem; }
+  .hh-theme-box { background: #E2E5D6; border-radius: 13px; padding: 0.75rem 1rem; margin-top: 0.75rem; }
+  .hh-theme-label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #427C7D; margin-bottom: 5px; }
+  .hh-theme-text { font-size: 14px; color: #233C4D; line-height: 1.5; }
+  .hh-callout { background: #233C4D; border-radius: 13px; padding: 0.75rem 1rem; margin-top: 0.75rem; }
+  .hh-callout-label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #D6AD60; margin-bottom: 6px; }
+  .hh-callout-text { font-size: 14px; color: #E2E5D6; line-height: 1.5; }
   .hh-callout-list { list-style: none; margin: 0; padding: 0; }
-  .hh-callout-list li { font-size: 11px; color: #E2E5D6; line-height: 1.5; padding: 4px 0; border-bottom: 0.5px solid rgba(226,229,214,0.2); }
+  .hh-callout-list li { font-size: 14px; color: #E2E5D6; line-height: 1.5; padding: 5px 0; border-bottom: 0.5px solid rgba(226,229,214,0.2); }
   .hh-callout-list li:last-child { border-bottom: none; padding-bottom: 0; }
-  .hh-callout-list li::before { content: "–"; margin-right: 6px; color: #D6AD60; }
-  .hh-insight-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 10px; margin-top: 0.75rem; }
-  .hh-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 1rem; font-size: 11px; color: #444; }
-  .hh-dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; margin-right: 4px; vertical-align: middle; }
-  .hh-qual-summary { font-size: 12px; color: #444; line-height: 1.6; padding: 0.75rem 0 0.5rem; border-bottom: 1px solid #d0cfc8; }
+  .hh-callout-list li::before { content: "–"; margin-right: 8px; color: #D6AD60; }
+  .hh-insight-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 13px; margin-top: 0.75rem; }
+  .hh-legend { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 1rem; font-size: 14px; color: #444; }
+  .hh-dot { width: 13px; height: 13px; border-radius: 2px; display: inline-block; margin-right: 5px; vertical-align: middle; }
+  .hh-qual-summary { font-size: 15px; color: #444; line-height: 1.6; padding: 0.75rem 0 0.5rem; border-bottom: 1px solid #d0cfc8; }
   .hh-card-toggle { cursor: pointer; user-select: none; display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
-  .hh-card-expand { display: flex; align-items: center; gap: 4px; flex-shrink: 0; color: #CA5757; margin-top: 2px; }
-  .hh-card-expand-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
-  .hh-card-chevron { font-size: 20px; line-height: 1.3; transition: transform 0.2s ease; display: inline-block; }
+  .hh-card-expand { display: flex; align-items: center; gap: 5px; flex-shrink: 0; color: #CA5757; margin-top: 2px; }
+  .hh-card-expand-label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+  .hh-card-chevron { font-size: 25px; line-height: 1.3; transition: transform 0.2s ease; display: inline-block; }
   .hh-card-chevron.open { transform: rotate(90deg); }
   .hh-collapsible { display: none; padding-top: 0.75rem; }
   .hh-collapsible.open { display: block; }
-  .hh-theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; margin-top: 0.25rem; }
-  .hh-theme-card { background: #E2E5D6; border-radius: 10px; padding: 0.75rem 1rem; }
-  .hh-theme-card-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #427C7D; margin-bottom: 4px; }
-  .hh-theme-card-count { font-size: 10px; color: #888; margin-bottom: 6px; }
-  .hh-theme-card-body { font-size: 11px; color: #233C4D; line-height: 1.5; }
-  .hh-quotes-toggle { display: inline-block; margin-top: 8px; font-size: 10px; font-weight: 600; color: #427C7D; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; background: none; border: none; padding: 0; }
-  .hh-quotes { display: none; margin-top: 8px; border-top: 1px solid rgba(66,124,125,0.2); padding-top: 8px; }
+  .hh-theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 13px; margin-top: 0.25rem; }
+  .hh-theme-card { background: #E2E5D6; border-radius: 13px; padding: 0.75rem 1rem; }
+  .hh-theme-card-title { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #427C7D; margin-bottom: 5px; }
+  .hh-theme-card-count { font-size: 13px; color: #888; margin-bottom: 8px; }
+  .hh-theme-card-body { font-size: 14px; color: #233C4D; line-height: 1.5; }
+  .hh-quotes-toggle { display: inline-block; margin-top: 10px; font-size: 13px; font-weight: 600; color: #427C7D; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; background: none; border: none; padding: 0; }
+  .hh-quotes { display: none; margin-top: 10px; border-top: 1px solid rgba(66,124,125,0.2); padding-top: 10px; }
   .hh-quotes.open { display: block; }
-  .hh-quote { font-size: 10.5px; color: #555; line-height: 1.5; padding: 5px 0; border-bottom: 0.5px solid rgba(0,0,0,0.08); }
+  .hh-quote { font-size: 13px; color: #555; line-height: 1.5; padding: 6px 0; border-bottom: 0.5px solid rgba(0,0,0,0.08); }
   .hh-quote:last-child { border-bottom: none; padding-bottom: 0; }
-  .hh-quote-tag { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.06em; padding: 1px 5px; border-radius: 3px; margin-right: 5px; vertical-align: middle; }
+  .hh-quote-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; padding: 1px 6px; border-radius: 3px; margin-right: 6px; vertical-align: middle; }
   .hh-quote-tag.new { background: #D6AD60; color: #fff; }
   .hh-quote-tag.ret { background: #233C4D; color: #fff; }
-  .hh-singles-card { background: #233C4D; border-radius: 10px; padding: 0.75rem 1rem; margin-top: 0; }
-  .hh-singles-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #D6AD60; margin-bottom: 8px; }
-  .hh-singles-item { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 0.5px solid rgba(226,229,214,0.15); }
+  .hh-singles-card { background: #233C4D; border-radius: 13px; padding: 0.75rem 1rem; margin-top: 0; }
+  .hh-singles-title { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #D6AD60; margin-bottom: 10px; }
+  .hh-singles-item { margin-bottom: 13px; padding-bottom: 13px; border-bottom: 0.5px solid rgba(226,229,214,0.15); }
   .hh-singles-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-  .hh-singles-theme { font-size: 10px; font-weight: 600; color: #E2E5D6; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
-  .hh-singles-quote { font-size: 10.5px; color: #E2E5D6; line-height: 1.5; font-style: italic; }
-  .hh-synth-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .hh-synth-card { border-radius: 8px; padding: 0.85rem 1rem 0.85rem 1.1rem; border-left: 5px solid; background: #fafaf8; }
+  .hh-singles-theme { font-size: 13px; font-weight: 600; color: #E2E5D6; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 5px; }
+  .hh-singles-quote { font-size: 13px; color: #E2E5D6; line-height: 1.5; font-style: italic; }
+  .hh-synth-list { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+  .hh-synth-card { border-radius: 10px; padding: 1.06rem 1.25rem 1.06rem 1.375rem; border-left: 5px solid; background: #fafaf8; }
   .hh-synth-card.structural { border-color: #427C7D; }
   .hh-synth-card.culture    { border-color: #D6AD60; }
   .hh-synth-card.followup   { border-color: #CA5757; }
   .hh-synth-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; gap: 0.5rem; }
-  .hh-synth-meta { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
-  .hh-synth-tag { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 7px; border-radius: 20px; color: #fff; flex-shrink: 0; }
+  .hh-synth-meta { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+  .hh-synth-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 9px; border-radius: 20px; color: #fff; flex-shrink: 0; }
   .hh-synth-tag.structural { background: #427C7D; }
   .hh-synth-tag.culture    { background: #D6AD60; }
   .hh-synth-tag.followup   { background: #CA5757; }
-  .hh-synth-title { font-size: 12px; font-weight: 700; color: #233C4D; }
-  .hh-synth-chevron { font-size: 18px; line-height: 1; color: #aaa; transition: transform 0.2s ease; display: inline-block; flex-shrink: 0; }
+  .hh-synth-title { font-size: 15px; font-weight: 700; color: #233C4D; }
+  .hh-synth-chevron { font-size: 22px; line-height: 1; color: #aaa; transition: transform 0.2s ease; display: inline-block; flex-shrink: 0; }
   .hh-synth-chevron.open { transform: rotate(90deg); }
   .hh-synth-body { display: none; padding-top: 0.6rem; margin-top: 0.6rem; border-top: 1px solid rgba(0,0,0,0.07); }
   .hh-synth-body.open { display: block; }
-  .hh-synth-text { font-size: 11px; color: #555; line-height: 1.55; }
-  /* Auto-zoom to match browser 125% */
-  .hh-wrap { zoom: 1.25; }
+  .hh-synth-text { font-size: 14px; color: #555; line-height: 1.55; }
   /* Appendix */
   .hh-app-q { margin-bottom: 1.5rem; }
-  .hh-app-q-title { font-size: 12px; font-weight: 700; color: #233C4D; margin-bottom: 0.5rem; padding-bottom: 0.35rem; border-bottom: 1px solid #d0cfc8; }
+  .hh-app-q-title { font-size: 15px; font-weight: 700; color: #233C4D; margin-bottom: 0.5rem; padding-bottom: 0.35rem; border-bottom: 1px solid #d0cfc8; }
   .hh-app-list { margin: 0; padding-left: 1.25rem; }
-  .hh-app-list li { font-size: 11px; color: #444; line-height: 1.6; padding: 3px 0; border-bottom: 0.5px solid #eeede8; }
+  .hh-app-list li { font-size: 14px; color: #444; line-height: 1.6; padding: 4px 0; border-bottom: 0.5px solid #eeede8; }
   .hh-app-list li:last-child { border-bottom: none; }
 </style>
 
@@ -95,9 +93,9 @@
   <button onclick="window.open('EoS Report PDF.html')" style="position:absolute; top:0; right:0; background:#CA5757; color:#fff; border:none; border-radius:8px; padding:0.45rem 1.1rem; font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;">Download PDF</button>
 
   <div style="margin-bottom:2.5rem;">
-    <div style="font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#427C7D; margin-bottom:0.5rem; text-align:center;">Hollyhock · Internal</div>
-    <div style="font-size:32px; font-weight:600; color:#233C4D; margin-bottom:0.75rem; text-align:center;">End of Season Staff Survey 2025</div>
-    <div style="font-size:12px; color:#555; line-height:1.7;">This report summarizes responses from the 2025 end of season staff survey across five sections: respondent profile, engagement and development, connectedness and empowerment, open-ended responses, and a cross-question synthesis of key signals. Charts are interactive — hover over any bar, point, or segment to see the underlying values. Theme and synthesis cards are expandable. A PDF version of this report, including all expanded content and a full response appendix, can be downloaded using the button in the top right corner.</div>
+    <div style="font-size:14px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#427C7D; margin-bottom:0.5rem; text-align:center;">Hollyhock · Internal</div>
+    <div style="font-size:40px; font-weight:600; color:#233C4D; margin-bottom:0.75rem; text-align:center;">End of Season Staff Survey 2025</div>
+    <div style="font-size:15px; color:#555; line-height:1.7;">This report summarizes responses from the 2025 end of season staff survey across five sections: respondent profile, engagement and development, connectedness and empowerment, open-ended responses, and a cross-question synthesis of key signals. Charts are interactive — hover over any bar, point, or segment to see the underlying values. Theme and synthesis cards are expandable. A PDF version of this report, including all expanded content and a full response appendix, can be downloaded using the button in the top right corner.</div>
   </div>
 
   <!-- SECTION 1: RESPONDENT PROFILE -->
@@ -125,7 +123,7 @@
   <div class="hh-row">
     <div class="hh-chart-wrap">
       <div class="hh-chart-title">Seasons at Hollyhock</div>
-      <div style="position:relative;height:180px;"><canvas id="tenureChart"></canvas></div>
+      <div style="position:relative;height:225px;"><canvas id="tenureChart"></canvas></div>
       <div class="hh-legend" style="margin-top:10px;">
         <span><span class="hh-dot" style="background:#233C4D"></span>1 year or less</span>
         <span><span class="hh-dot" style="background:#427C7D"></span>2–4 seasons</span>
@@ -135,7 +133,7 @@
     </div>
     <div class="hh-chart-wrap">
       <div class="hh-chart-title">New vs. returning staff</div>
-      <div style="position:relative;height:180px;"><canvas id="newChart"></canvas></div>
+      <div style="position:relative;height:225px;"><canvas id="newChart"></canvas></div>
       <div class="hh-legend" style="margin-top:10px;">
         <span><span class="hh-dot" style="background:#233C4D"></span>Returning 67.9%</span>
         <span><span class="hh-dot" style="background:#D6AD60"></span>New 32.1%</span>
@@ -157,7 +155,7 @@
         <span><span class="hh-dot" style="background:#233C4D"></span>Returning (n=19)</span>
         <span><span class="hh-dot" style="background:#D6AD60"></span>New (n=9)</span>
       </div>
-      <div style="position:relative;height:220px;"><canvas id="joinChart"></canvas></div>
+      <div style="position:relative;height:275px;"><canvas id="joinChart"></canvas></div>
       <div class="hh-theme-box">
         <div class="hh-theme-label">Staff themes</div>
         <div class="hh-theme-text">Love of the place & its natural setting; sense of community & culture; and food were the most common themes in open responses.</div>
@@ -175,7 +173,7 @@
         <span><span class="hh-dot" style="background:#427C7D"></span>Seasonal (n=18)</span>
         <span><span class="hh-dot" style="background:#CA5757"></span>Year-round (n=9)</span>
       </div>
-      <div style="position:relative;height:220px;"><canvas id="trainingChart"></canvas></div>
+      <div style="position:relative;height:275px;"><canvas id="trainingChart"></canvas></div>
       <div class="hh-theme-box">
         <div class="hh-theme-label">Staff themes</div>
         <div class="hh-theme-text">Specific asks included kitchen & maintenance skills training before season start.</div>
@@ -198,7 +196,7 @@
             <span><span class="hh-dot" style="background:#D6AD60"></span>New staff (n=9)</span>
             <span><span class="hh-dot" style="background:#233C4D"></span>Returning staff (n=19)</span>
           </div>
-          <div style="position:relative;height:250px;"><canvas id="rewardGroupChart"></canvas></div>
+          <div style="position:relative;height:313px;"><canvas id="rewardGroupChart"></canvas></div>
         </div>
         <div>
           <div style="font-size:12px; font-weight:600; color:#233C4D; margin-bottom:4px;">What is a particularly challenging part of working at Hollyhock for you?</div>
@@ -206,7 +204,7 @@
             <span><span class="hh-dot" style="background:#D6AD60"></span>New staff (n=8)</span>
             <span><span class="hh-dot" style="background:#233C4D"></span>Returning staff (n=19)</span>
           </div>
-          <div style="position:relative;height:200px;"><canvas id="challengeGroupChart"></canvas></div>
+          <div style="position:relative;height:250px;"><canvas id="challengeGroupChart"></canvas></div>
         </div>
       </div>
       <div style="flex:1; min-width:0;">
@@ -217,7 +215,7 @@
           <span><span class="hh-dot" style="background:#233C4D"></span>5–7 seasons (n=3)</span>
           <span><span class="hh-dot" style="background:#95bc67"></span>8+ seasons (n=4)</span>
         </div>
-        <div style="position:relative;height:500px;"><canvas id="rewardTenureChart"></canvas></div>
+        <div style="position:relative;height:625px;"><canvas id="rewardTenureChart"></canvas></div>
       </div>
     </div>
     <div class="hh-insight-grid" style="margin-top:1rem;">
@@ -243,7 +241,7 @@
     <div class="hh-chart-wrap">
       <div class="hh-chart-title">Which team-building activities would you be interested in participating in, if offered?</div>
       <div class="hh-chart-sub">Multi-select — % of respondents</div>
-      <div style="position:relative;height:200px;"><canvas id="teamChart"></canvas></div>
+      <div style="position:relative;height:250px;"><canvas id="teamChart"></canvas></div>
       <div class="hh-theme-box">
         <div class="hh-theme-label">Staff themes</div>
         <div class="hh-theme-text"><strong>Connection and learning</strong> were the strongest themes in open responses. Staff want opportunities to share with and hear from each other, including <strong>intimate circles and learning nights</strong>. Remote and shift workers raised a consistent concern that <strong>activities are often scheduled in ways that exclude them</strong>. Both groups asked specifically for more structured opportunities to connect with the broader team.</div>
@@ -253,7 +251,7 @@
     <div class="hh-chart-wrap">
       <div class="hh-chart-title">What is your favourite perk at Hollyhock?</div>
       <div class="hh-chart-sub">Multiple choice + open response — % of respondents</div>
-      <div style="position:relative;height:200px;"><canvas id="perkChart"></canvas></div>
+      <div style="position:relative;height:250px;"><canvas id="perkChart"></canvas></div>
       <div class="hh-theme-box">
         <div class="hh-theme-label">Staff themes</div>
         <div class="hh-theme-text">Several staff said they couldn't choose just one perk, reflecting <strong>broad appreciation across the board</strong>. <strong>Food</strong> in particular came up repeatedly. Remote staff highlighted <strong>accommodation access and Comp Program</strong> as particularly meaningful. One staff member noted that <strong>health benefits would be a welcome addition</strong> to the package.</div>
@@ -265,7 +263,7 @@
     <div class="hh-chart-wrap">
       <div class="hh-chart-title">Has your experience of transparency at Hollyhock over the last year...</div>
       <div class="hh-chart-sub">Multiple choice — % of responses</div>
-      <div style="position:relative;height:180px;"><canvas id="transpChart"></canvas></div>
+      <div style="position:relative;height:225px;"><canvas id="transpChart"></canvas></div>
       <div class="hh-legend" style="margin-top:10px;">
         <span><span class="hh-dot" style="background:#427C7D"></span>Improved (n=10)</span>
         <span><span class="hh-dot" style="background:#D6AD60"></span>Stayed the same (n=6)</span>
@@ -282,7 +280,7 @@
     <div class="hh-chart-wrap">
       <div class="hh-chart-title">Did you utilize "The Burrow"?</div>
       <div class="hh-chart-sub">Multiple choice — % of responses</div>
-      <div style="position:relative;height:180px;"><canvas id="burrowChart"></canvas></div>
+      <div style="position:relative;height:225px;"><canvas id="burrowChart"></canvas></div>
       <div class="hh-legend" style="margin-top:10px;">
         <span><span class="hh-dot" style="background:#233C4D"></span>Yes (n=13)</span>
         <span><span class="hh-dot" style="background:#427C7D"></span>No (n=13)</span>
@@ -342,7 +340,7 @@
       <span><span class="hh-dot" style="background:#427C7D"></span>Empowerment</span>
       <span><span class="hh-dot" style="background:rgba(149,188,103,0.4); border-radius:50%; border: 1px solid #95bc67;"></span>Individual responses</span>
     </div>
-    <div style="position:relative;height:280px;"><canvas id="tenureGrouped"></canvas></div>
+    <div style="position:relative;height:350px;"><canvas id="tenureGrouped"></canvas></div>
     <div class="hh-theme-box">
       <div class="hh-theme-label">Insight</div>
       <div class="hh-theme-text" id="tenureInsight">Calculating...</div>
@@ -364,7 +362,7 @@
           <span><span class="hh-dot" style="background:rgba(214,173,96,0.7); border-radius:50%;"></span>New (n=9)</span>
           <span><span class="hh-dot" style="background:#CA5757; border-radius:0;"></span>Regression line</span>
         </div>
-        <div style="position:relative;height:280px;"><canvas id="scatterChart"></canvas></div>
+        <div style="position:relative;height:350px;"><canvas id="scatterChart"></canvas></div>
       </div>
       <div style="flex:1; min-width:0;">
         <div style="font-size:13px; font-weight:600; color:#233C4D; margin-bottom:6px;">On campus vs. remote staff</div>
@@ -373,7 +371,7 @@
           <span><span class="hh-dot" style="background:rgba(202,87,87,0.8); border-radius:50%;"></span>Remote (n=5)</span>
           <span><span class="hh-dot" style="background:#CA5757; border-radius:0;"></span>Regression line</span>
         </div>
-        <div style="position:relative;height:280px;"><canvas id="scatterChart2"></canvas></div>
+        <div style="position:relative;height:350px;"><canvas id="scatterChart2"></canvas></div>
       </div>
     </div>
     <div class="hh-insight-grid" style="margin-top:1rem;">
