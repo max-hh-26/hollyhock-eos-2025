@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hollyhock End of Season Survey 2025</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+  .hh-wrap { font-family: 'Montserrat', sans-serif; background: #F3F3EB; padding: 2rem; }
+  .hh-divider { border: none; border-top: 1.5px solid #d0cfc8; margin: 2.5rem 0; }
+  .hh-section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #427C7D; margin-bottom: 0.5rem; }
+  .hh-section-title { font-size: 22px; font-weight: 600; color: #233C4D; margin: 0 0 1.5rem; }
+  .hh-cards-3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin-bottom: 1.25rem; }
+  .hh-card { background: #fff; border-radius: 12px; padding: 1rem 1.25rem; border: 0.5px solid #d0cfc8; }
+  .hh-card-label { font-size: 11px; color: #427C7D; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
+  .hh-card-val { font-size: 26px; font-weight: 600; color: #233C4D; line-height: 1.1; }
+  .hh-card-sub { font-size: 11px; color: #888; margin-top: 2px; }
+  .hh-chart-wrap { background: #fff; border-radius: 12px; padding: 1.25rem 1.5rem; border: 0.5px solid #d0cfc8; margin-bottom: 1.25rem; }
+  .hh-chart-title { font-size: 13px; font-weight: 600; color: #233C4D; margin-bottom: 0.25rem; }
+  .hh-chart-sub { font-size: 11px; color: #888; margin-bottom: 1rem; }
+  .hh-row { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 12px; margin-bottom: 1.25rem; }
+  .hh-theme-box { background: #E2E5D6; border-radius: 10px; padding: 0.75rem 1rem; margin-top: 0.75rem; }
+  .hh-theme-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #427C7D; margin-bottom: 4px; }
+  .hh-theme-text { font-size: 11px; color: #233C4D; line-height: 1.5; }
+  .hh-callout { background: #233C4D; border-radius: 10px; padding: 0.75rem 1rem; margin-top: 0.75rem; }
+  .hh-callout-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #D6AD60; margin-bottom: 6px; }
+  .hh-callout-text { font-size: 11px; color: #E2E5D6; line-height: 1.5; }
+  .hh-callout-list { list-style: none; margin: 0; padding: 0; }
+  .hh-callout-list li { font-size: 11px; color: #E2E5D6; line-height: 1.5; padding: 4px 0; border-bottom: 0.5px solid rgba(226,229,214,0.2); }
+  .hh-callout-list li:last-child { border-bottom: none; padding-bottom: 0; }
+  .hh-callout-list li::before { content: "–"; margin-right: 6px; color: #D6AD60; }
+  .hh-insight-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 10px; margin-top: 0.75rem; }
+  .hh-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 1rem; font-size: 11px; color: #444; }
+  .hh-dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; margin-right: 4px; vertical-align: middle; }
+  .hh-qual-summary { font-size: 12px; color: #444; line-height: 1.6; padding: 0.75rem 0 0.5rem; border-bottom: 1px solid #d0cfc8; }
+  .hh-card-toggle { cursor: pointer; user-select: none; display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
+  .hh-card-expand { display: flex; align-items: center; gap: 4px; flex-shrink: 0; color: #CA5757; margin-top: 2px; }
+  .hh-card-expand-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+  .hh-card-chevron { font-size: 20px; line-height: 1.3; transition: transform 0.2s ease; display: inline-block; }
+  .hh-card-chevron.open { transform: rotate(90deg); }
+  .hh-collapsible { display: none; padding-top: 0.75rem; }
+  .hh-collapsible.open { display: block; }
+  .hh-theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; margin-top: 0.25rem; }
+  .hh-theme-card { background: #E2E5D6; border-radius: 10px; padding: 0.75rem 1rem; }
+  .hh-theme-card-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #427C7D; margin-bottom: 4px; }
+  .hh-theme-card-count { font-size: 10px; color: #888; margin-bottom: 6px; }
+  .hh-theme-card-body { font-size: 11px; color: #233C4D; line-height: 1.5; }
+  .hh-quotes-toggle { display: inline-block; margin-top: 8px; font-size: 10px; font-weight: 600; color: #427C7D; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; background: none; border: none; padding: 0; }
+  .hh-quotes { display: none; margin-top: 8px; border-top: 1px solid rgba(66,124,125,0.2); padding-top: 8px; }
+  .hh-quotes.open { display: block; }
+  .hh-quote { font-size: 10.5px; color: #555; line-height: 1.5; padding: 5px 0; border-bottom: 0.5px solid rgba(0,0,0,0.08); }
+  .hh-quote:last-child { border-bottom: none; padding-bottom: 0; }
+  .hh-quote-tag { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.06em; padding: 1px 5px; border-radius: 3px; margin-right: 5px; vertical-align: middle; }
+  .hh-quote-tag.new { background: #D6AD60; color: #fff; }
+  .hh-quote-tag.ret { background: #233C4D; color: #fff; }
+  .hh-singles-card { background: #233C4D; border-radius: 10px; padding: 0.75rem 1rem; margin-top: 0; }
+  .hh-singles-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #D6AD60; margin-bottom: 8px; }
+  .hh-singles-item { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 0.5px solid rgba(226,229,214,0.15); }
+  .hh-singles-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .hh-singles-theme { font-size: 10px; font-weight: 600; color: #E2E5D6; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
+  .hh-singles-quote { font-size: 10.5px; color: #E2E5D6; line-height: 1.5; font-style: italic; }
+  .hh-synth-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .hh-synth-card { border-radius: 8px; padding: 0.85rem 1rem 0.85rem 1.1rem; border-left: 5px solid; background: #fafaf8; }
+  .hh-synth-card.structural { border-color: #427C7D; }
+  .hh-synth-card.culture    { border-color: #D6AD60; }
+  .hh-synth-card.followup   { border-color: #CA5757; }
+  .hh-synth-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; gap: 0.5rem; }
+  .hh-synth-meta { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
+  .hh-synth-tag { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 7px; border-radius: 20px; color: #fff; flex-shrink: 0; }
+  .hh-synth-tag.structural { background: #427C7D; }
+  .hh-synth-tag.culture    { background: #D6AD60; }
+  .hh-synth-tag.followup   { background: #CA5757; }
+  .hh-synth-title { font-size: 12px; font-weight: 700; color: #233C4D; }
+  .hh-synth-chevron { font-size: 18px; line-height: 1; color: #aaa; transition: transform 0.2s ease; display: inline-block; flex-shrink: 0; }
+  .hh-synth-chevron.open { transform: rotate(90deg); }
+  .hh-synth-body { display: none; padding-top: 0.6rem; margin-top: 0.6rem; border-top: 1px solid rgba(0,0,0,0.07); }
+  .hh-synth-body.open { display: block; }
+  .hh-synth-text { font-size: 11px; color: #555; line-height: 1.55; }
+  /* Auto-zoom to match browser 125% */
+  .hh-wrap { zoom: 1.25; }
+  /* Appendix */
+  .hh-app-q { margin-bottom: 1.5rem; }
+  .hh-app-q-title { font-size: 12px; font-weight: 700; color: #233C4D; margin-bottom: 0.5rem; padding-bottom: 0.35rem; border-bottom: 1px solid #d0cfc8; }
+  .hh-app-list { margin: 0; padding-left: 1.25rem; }
+  .hh-app-list li { font-size: 11px; color: #444; line-height: 1.6; padding: 3px 0; border-bottom: 0.5px solid #eeede8; }
+  .hh-app-list li:last-child { border-bottom: none; }
+</style>
+
+<div class="hh-wrap">
+
+  <div style="margin-bottom:2.5rem;">
+    <div style="font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#427C7D; margin-bottom:0.5rem; text-align:center;">Hollyhock · Internal</div>
+    <div style="font-size:32px; font-weight:600; color:#233C4D; margin-bottom:0.75rem; text-align:center;">End of Season Staff Survey 2025</div>
+    <div style="font-size:12px; color:#555; line-height:1.7;">This report summarizes responses from the 2025 end of season staff survey across five sections: respondent profile, engagement and development, connectedness and empowerment, open-ended responses, and a cross-question synthesis of key signals. Charts are interactive — hover over any bar, point, or segment to see the underlying values. Theme and synthesis cards are expandable. A PDF version of this report, including all expanded content and a full response appendix, can be downloaded using the button above.</div>
+    <div style="text-align:right; margin-top:0.75rem;">
+      <button onclick="window.open('EoS Report PDF.html')" style="background:#CA5757; color:#fff; border:none; border-radius:8px; padding:0.45rem 1.1rem; font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;">Download PDF</button>
+    </div>
+  </div>
+
+  <!-- SECTION 1: RESPONDENT PROFILE -->
+
+  <div class="hh-section-title">Respondent Profile</div>
+
+  <div class="hh-cards-3">
+    <div class="hh-card">
+      <div class="hh-card-label">Total respondents</div>
+      <div class="hh-card-val">28</div>
+      <div class="hh-card-sub">2025 season</div>
+    </div>
+    <div class="hh-card">
+      <div class="hh-card-label">On campus</div>
+      <div class="hh-card-val">82.1%</div>
+      <div class="hh-card-sub">23 of 28</div>
+    </div>
+    <div class="hh-card">
+      <div class="hh-card-label">Seasonal staff</div>
+      <div class="hh-card-val">67.9%</div>
+      <div class="hh-card-sub">19 of 28</div>
+    </div>
+  </div>
+
+  <div class="hh-row">
+    <div class="hh-chart-wrap">
+      <div class="hh-chart-title">Seasons at Hollyhock</div>
+      <div style="position:relative;height:180px;"><canvas id="tenureChart"></canvas></div>
+      <div class="hh-legend" style="margin-top:10px;">
+        <span><span class="hh-dot" style="background:#233C4D"></span>1 year or less</span>
+        <span><span class="hh-dot" style="background:#427C7D"></span>2–4 seasons</span>
+        <span><span class="hh-dot" style="background:#D6AD60"></span>5–7 seasons</span>
+        <span><span class="hh-dot" style="background:#CA5757"></span>8+ seasons</span>
+      </div>
+    </div>
+    <div class="hh-chart-wrap">
+      <div class="hh-chart-title">New vs. returning staff</div>
+      <div style="position:relative;height:180px;"><canvas id="newChart"></canvas></div>
+      <div class="hh-legend" style="margin-top:10px;">
+        <span><span class="hh-dot" style="background:#233C4D"></span>Returning 67.9%</span>
+        <span><span class="hh-dot" style="background:#D6AD60"></span>New 32.1%</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hh-divider">
+
+  <!-- SECTION 2: ENGAGEMENT & DEVELOPMENT -->
+
+  <div class="hh-section-title">Engagement & Development</div>
+
+  <div class="hh-row">
+    <div class="hh-chart-wrap">
+      <div class="hh-chart-title">Why did you join, return to, or stay at Hollyhock?</div>
+      <div class="hh-chart-sub">Multi-select — % of respondents</div>
+      <div class="hh-legend">
+        <span><span class="hh-dot" style="background:#233C4D"></span>Returning (n=19)</span>
+        <span><span class="hh-dot" style="background:#D6AD60"></span>New (n=9)</span>
+      </div>
+      <div style="position:relative;height:220px;"><canvas id="joinChart"></canvas></div>
+      <div class="hh-theme-box">
+        <div class="hh-theme-label">Staff themes</div>
+        <div class="hh-theme-text">Love of the place & its natural setting; sense of community & culture; and food were the most common themes in open responses.</div>
+      </div>
+      <div class="hh-callout" style="margin-top:0.5rem;">
+        <div class="hh-callout-label">Context note</div>
+        <div class="hh-callout-text">New and returning staff were asked different but thematically similar versions of this question: "Why did you join?" vs. "Why have you returned or stayed?" The options were identical.</div>
+      </div>
+    </div>
+
+    <div class="hh-chart-wrap">
+      <div class="hh-chart-title">What types of training opportunities would you like to see next year?</div>
+      <div class="hh-chart-sub">Multi-select — % of respondents</div>
+      <div class="hh-legend">
+        <span><span class="hh-dot" style="background:#427C7D"></span>Seasonal (n=18)</span>
+        <span><span class="hh-dot" style="background:#CA5757"></span>Year-round (n=9)</span>
+      </div>
+      <div style="position:relative;height:220px;"><canvas id="trainingChart"></canvas></div>
+      <div class="hh-theme-box">
+        <div class="hh-theme-label">Staff themes</div>
+        <div class="hh-theme-text">Specific asks included kitchen & maintenance skills training before season start.</div>
+      </div>
+      <div class="hh-callout" style="margin-top:0.5rem;">
+        <div class="hh-callout-label">Context note</div>
+        <div class="hh-callout-text">The high demand for Mental Health First Aid training is likely influenced by events that occurred during the season. This may not reflect a standing baseline level of interest.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hh-chart-wrap">
+    <div class="hh-chart-title">Motivations &amp; Challenges</div>
+    <div class="hh-chart-sub">Multi-select — bars show each group’s share of all respondents; combined bar height equals the overall selection rate</div>
+    <div class="hh-row" style="margin-top:0.75rem; gap:1.5rem; align-items:flex-start;">
+      <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:1.25rem;">
+        <div>
+          <div style="font-size:12px; font-weight:600; color:#233C4D; margin-bottom:4px;">What’s a particularly rewarding and/or motivating part of working at Hollyhock for you?</div>
+          <div class="hh-legend" style="margin-bottom:0.5rem;">
+            <span><span class="hh-dot" style="background:#D6AD60"></span>New staff (n=9)</span>
+            <span><span class="hh-dot" style="background:#233C4D"></span>Returning staff (n=19)</span>
+          </div>
+          <div style="position:relative;height:250px;"><canvas id="rewardGroupChart"></canvas></div>
+        </div>
+        <div>
+          <div style="font-size:12px; font-weight:600; color:#233C4D; margin-bottom:4px;">What is a particularly challenging part of working at Hollyhock for you?</div>
+          <div class="hh-legend" style="margin-bottom:0.5rem;">
+            <span><span class="hh-dot" style="background:#D6AD60"></span>New staff (n=8)</span>
+            <span><span class="hh-dot" style="background:#233C4D"></span>Returning staff (n=19)</span>
+          </div>
+          <div style="position:relative;height:200px;"><canvas id="challengeGroupChart"></canvas></div>
+        </div>
+      </div>
+      <div style="flex:1; min-width:0;">
+        <div style="font-size:12px; font-weight:600; color:#233C4D; margin-bottom:4px;">What’s a particularly rewarding and/or motivating part of working at Hollyhock for you? By tenure group</div>
+        <div class="hh-legend" style="margin-bottom:0.5rem;">
+          <span><span class="hh-dot" style="background:#D6AD60"></span>1 season (n=9)</span>
+          <span><span class="hh-dot" style="background:#427C7D"></span>2–4 seasons (n=12)</span>
+          <span><span class="hh-dot" style="background:#233C4D"></span>5–7 seasons (n=3)</span>
+          <span><span class="hh-dot" style="background:#95bc67"></span>8+ seasons (n=4)</span>
+        </div>
+        <div style="position:relative;height:500px;"><canvas id="rewardTenureChart"></canvas></div>
+      </div>
+    </div>
+    <div class="hh-insight-grid" style="margin-top:1rem;">
+      <div class="hh-theme-box">
+        <div class="hh-theme-label">Rewarding: staff themes</div>
+        <div class="hh-theme-text">Open responses echoed the pre-defined options, with staff highlighting the <strong>sense of peace and belonging</strong> the natural setting provides. Several responses mentioned <strong>pride in the team’s commitment</strong> to quality and staff experience as a core motivating force.</div>
+      </div>
+      <div class="hh-theme-box">
+        <div class="hh-theme-label">Challenging: staff themes</div>
+        <div class="hh-theme-text">Open responses highlighted <strong>health benefits gaps</strong>, <strong>communication and operational leadership</strong> concerns, and the <strong>physical demands</strong> of some roles. Some staff noted concern about witnessing colleagues burn out.</div>
+      </div>
+      <div class="hh-callout" style="grid-column: 1 / -1;">
+        <div class="hh-callout-label">Key insights</div>
+        <div class="hh-callout-text">
+          <strong>Coworkers are the universal motivator:</strong> Selected by 89% of new and 74% of returning staff, the most stable signal across all groups and tenure lengths.<br><br>
+          <strong>Mission resonates most with new staff and fades with tenure:</strong> 56% of first-season staff cite the leadership education mission as motivating, dropping to 25% among 8+ season staff. Long-tenured staff may need active re-engagement around organizational purpose.<br><br>
+          <strong>Workload accumulates:</strong> Only 25% of new staff flag workload as a challenge, compared to 53% of returning staff. This gap mirrors the burnout concerns in open responses and the empowerment gap seen in the connectedness data.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hh-row">
+    <div class="hh-chart-wrap">
+      <div class="hh-chart-title">Which team-building activities would you be interested in participating in, if offered?</div>
+      <div class="hh-chart-sub">Multi-select — % of respondents</div>
+      <div style="position:relative;height:200px;"><canvas id="teamChart"></canvas></div>
+      <div class="hh-theme-box">
+        <div class="hh-theme-label">Staff themes</div>
+        <div class="hh-theme-text"><strong>Connection and learning</strong> were the strongest themes in open responses. Staff want opportunities to share with and hear from each other, including <strong>intimate circles and learning nights</strong>. Remote and shift workers raised a consistent concern that <strong>activities are often scheduled in ways that exclude them</strong>. Both groups asked specifically for more structured opportunities to connect with the broader team.</div>
+      </div>
+    </div>
+
+    <div class="hh-chart-wrap">
+      <div class="hh-chart-title">What is your favourite perk at Hollyhock?</div>
+      <div class="hh-chart-sub">Multiple choice + open response — % of respondents</div>
+      <div style="position:relative;height:200px;"><canvas id="perkChart"></canvas></div>
+      <div class="hh-theme-box">
+        <div class="hh-theme-label">Staff themes</div>
+        <div class="hh-theme-text">Several staff said they couldn't choose just one perk, reflecting <strong>broad appreciation across the board</strong>. <strong>Food</strong> in particular came up repeatedly. Remote staff highlighted <strong>accommodation access and Comp Program</strong> as particularly meaningful. One staff member noted that <strong>health benefits would be a welcome addition</strong> to the package.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hh-row">
+    <div class="hh-chart-wrap">
+      <div class="hh-chart-title">Has your experience of transparency at Hollyhock over the last year...</div>
+      <div class="hh-chart-sub">Multiple choice — % of responses</div>
+      <div style="position:relative;height:180px;"><canvas id="transpChart"></canvas></div>
+      <div class="hh-legend" style="margin-top:10px;">
+        <span><span class="hh-dot" style="background:#427C7D"></span>Improved (n=10)</span>
+        <span><span class="hh-dot" style="background:#D6AD60"></span>Stayed the same (n=6)</span>
+        <span><span class="hh-dot" style="background:#CA5757"></span>Declined (n=3)</span>
+      </div>
+      <div class="hh-theme-box" style="background:#fff3cd; margin-top:0.75rem;">
+        <div class="hh-theme-label" style="color:#856404;">Data notes</div>
+        <div class="hh-theme-text" style="color:#533f03;">
+          <strong>Returning staff only:</strong> This question was only asked of returning staff (n=19). New staff responses are excluded as they have no prior year to compare against.<br><br>
+          <strong>Year-over-year comparison:</strong> In 2024, 53% of returning staff reported improvement, 31% no change, and 16% a decline — suggesting a modest softening in perceived transparency gains this year.
+        </div>
+      </div>
+    </div>
+    <div class="hh-chart-wrap">
+      <div class="hh-chart-title">Did you utilize "The Burrow"?</div>
+      <div class="hh-chart-sub">Multiple choice — % of responses</div>
+      <div style="position:relative;height:180px;"><canvas id="burrowChart"></canvas></div>
+      <div class="hh-legend" style="margin-top:10px;">
+        <span><span class="hh-dot" style="background:#233C4D"></span>Yes (n=13)</span>
+        <span><span class="hh-dot" style="background:#427C7D"></span>No (n=13)</span>
+        <span><span class="hh-dot" style="background:#D6AD60"></span>Turn it back (n=1)</span>
+        <span><span class="hh-dot" style="background:#CA5757"></span>What is it? (n=1)</span>
+      </div>
+      <div class="hh-theme-box" style="background:#fff3cd; margin-top:0.75rem;">
+        <div class="hh-theme-label" style="color:#856404;">Data notes</div>
+        <div class="hh-theme-text" style="color:#533f03;">
+          <strong>Single-response options:</strong> "Turn it back into a kids room" and "What is The Burrow?" each represent one respondent (n=1, 3.6%) and should not be interpreted as trends.<br><br>
+          <strong>Even split:</strong> Yes and No are exactly tied (13 each). With only 28 total respondents, a difference of one person would shift the result — treat this as a rough parity rather than a meaningful distinction.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hh-divider">
+
+  <!-- SECTION 3: CONNECTEDNESS & EMPOWERMENT -->
+
+  <div class="hh-section-title">Connectedness & Empowerment</div>
+
+  <div class="hh-row" style="margin-bottom:1.25rem;">
+    <div class="hh-card">
+      <div class="hh-card-label">Connectedness question</div>
+      <div class="hh-card-sub" style="font-size:12px; color:#233C4D; margin-top:4px;">On a scale of 1 to 5, how connected do you feel with your coworkers? 1 being not at all connected, 5 being very connected.</div>
+    </div>
+    <div class="hh-card">
+      <div class="hh-card-label">Empowerment question</div>
+      <div class="hh-card-sub" style="font-size:12px; color:#233C4D; margin-top:4px;">On a scale from 1 to 5, how empowered do you feel to share ideas or opinions that are different from your fellow team members?</div>
+    </div>
+  </div>
+
+  <div class="hh-cards-3">
+    <div class="hh-card">
+      <div class="hh-card-label">Connectedness mean</div>
+      <div class="hh-card-val">3.79</div>
+      <div class="hh-card-sub">out of 5</div>
+    </div>
+    <div class="hh-card">
+      <div class="hh-card-label">Empowerment mean</div>
+      <div class="hh-card-val">3.50</div>
+      <div class="hh-card-sub">out of 5</div>
+    </div>
+    <div class="hh-card">
+      <div class="hh-card-label">Correlation (r)</div>
+      <div class="hh-card-val">0.50</div>
+      <div class="hh-card-sub">p = 0.007 — significant</div>
+    </div>
+  </div>
+
+  <div class="hh-chart-wrap">
+    <div class="hh-chart-title">Mean scores by tenure group</div>
+    <div class="hh-chart-sub">Average rating out of 5 — connectedness and empowerment compared across tenure lengths</div>
+    <div class="hh-legend">
+      <span><span class="hh-dot" style="background:#233C4D"></span>Connectedness</span>
+      <span><span class="hh-dot" style="background:#427C7D"></span>Empowerment</span>
+      <span><span class="hh-dot" style="background:rgba(149,188,103,0.4); border-radius:50%; border: 1px solid #95bc67;"></span>Individual responses</span>
+    </div>
+    <div style="position:relative;height:280px;"><canvas id="tenureGrouped"></canvas></div>
+    <div class="hh-theme-box">
+      <div class="hh-theme-label">Insight</div>
+      <div class="hh-theme-text" id="tenureInsight">Calculating...</div>
+    </div>
+    <div class="hh-theme-box" style="background:#fff3cd; margin-top:0.75rem;">
+      <div class="hh-theme-label" style="color:#856404;">Data note</div>
+      <div class="hh-theme-text" style="color:#533f03;">The 5–7 seasons group has only 3 respondents. Patterns in this group should not be interpreted as representative and are best treated as anecdotal.</div>
+    </div>
+  </div>
+
+  <div class="hh-chart-wrap">
+    <div class="hh-chart-title">Connectedness vs. Empowerment</div>
+    <div class="hh-chart-sub">Each point represents one staff member. Points are offset slightly so that overlapping responses don't hide each other.</div>
+    <div class="hh-row" style="margin-top:0.75rem; gap:1.5rem;">
+      <div style="flex:1; min-width:0;">
+        <div style="font-size:13px; font-weight:600; color:#233C4D; margin-bottom:6px;">New vs. returning staff</div>
+        <div class="hh-legend">
+          <span><span class="hh-dot" style="background:rgba(35,60,77,0.6); border-radius:50%;"></span>Returning (n=19)</span>
+          <span><span class="hh-dot" style="background:rgba(214,173,96,0.7); border-radius:50%;"></span>New (n=9)</span>
+          <span><span class="hh-dot" style="background:#CA5757; border-radius:0;"></span>Regression line</span>
+        </div>
+        <div style="position:relative;height:280px;"><canvas id="scatterChart"></canvas></div>
+      </div>
+      <div style="flex:1; min-width:0;">
+        <div style="font-size:13px; font-weight:600; color:#233C4D; margin-bottom:6px;">On campus vs. remote staff</div>
+        <div class="hh-legend">
+          <span><span class="hh-dot" style="background:rgba(66,124,125,0.85); border-radius:50%;"></span>On campus (n=23)</span>
+          <span><span class="hh-dot" style="background:rgba(202,87,87,0.8); border-radius:50%;"></span>Remote (n=5)</span>
+          <span><span class="hh-dot" style="background:#CA5757; border-radius:0;"></span>Regression line</span>
+        </div>
+        <div style="position:relative;height:280px;"><canvas id="scatterChart2"></canvas></div>
+      </div>
+    </div>
+    <div class="hh-insight-grid" style="margin-top:1rem;">
+      <div class="hh-theme-box">
+        <div class="hh-theme-label">The relationship</div>
+        <div class="hh-theme-text">Staff who feel more socially connected also tend to feel more comfortable speaking up. Both scores sit above the midpoint, but connectedness scores notably higher than empowerment with less variation across staff.</div>
+      </div>
+      <div class="hh-theme-box">
+        <div class="hh-theme-label">Statistical significance</div>
+        <div class="hh-theme-text">Even though there are only 28 respondents, a p-value of 0.007 indicates the relationship is unlikely to be due to chance.</div>
+      </div>
+      <div class="hh-callout" style="grid-column: 1 / -1;">
+        <div class="hh-callout-label">Practical read</div>
+        <div class="hh-callout-text">
+          <strong>Overall relationship:</strong> Fostering stronger team connection may help staff feel more psychologically safe to voice differing opinions. However, the moderate r (0.50) also suggests other factors beyond social connection are influencing empowerment. This pattern holds across every subgroup examined: connectedness consistently exceeds empowerment for new, returning, campus, and remote staff alike. The only near-exception is remote staff, where the two scores are equal (3.60).<br><br>
+          <strong>New vs. returning staff:</strong> New staff score lower on both connectedness (3.44 vs. 3.95) and empowerment (3.00 vs. 3.74), with the empowerment gap being the larger of the two. This suggests that early integration, building social bonds and feeling established within the team, may be especially important for psychological safety.<br><br>
+          <strong>On campus vs. remote staff:</strong> Campus and remote staff score similarly overall, but with a notable reversal: remote staff score slightly lower on connectedness (3.60 vs. 3.83) yet slightly higher on empowerment (3.60 vs. 3.48). With only 5 remote respondents this should be interpreted cautiously, but it may suggest that remote staff experience fewer in-group social dynamics that can sometimes suppress differing opinions.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hh-divider">
+
+  <!-- SECTION 4: OPEN-ENDED RESPONSES -->
+
+  <div class="hh-section-title">Open-Ended Responses</div>
+
+  <!-- Q1 -->
+  <div class="hh-chart-wrap" style="margin-bottom:1.25rem;">
+    <div class="hh-card-toggle" onclick="toggleCard(this)">
+      <div style="flex:1; min-width:0;">
+        <div class="hh-chart-title" style="font-size:14px;">What is something Hollyhock, as an organisation, is doing well?</div>
+        <div class="hh-qual-summary">
+          Responses to this question were notably positive and consistent. Staff across tenure levels point to the same core strengths: a culture that attracts and retains good people, food and physical spaces that create a sense of belonging, pride in the quality of guest programming, and a felt sense that the organization genuinely cares about the people who work there. The 2025 wage increase was the most frequently cited concrete action, mentioned spontaneously by new and returning staff alike. Where themes appear in both groups independently, the signal is stronger — these are not just returning staff nostalgia but qualities that new staff recognize on arrival.
+        </div>
+      </div>
+      <div class="hh-card-expand"><span class="hh-card-expand-label">View themes</span><span class="hh-card-chevron">&#8250;</span></div>
+    </div>
+    <div class="hh-collapsible">
+    <div class="hh-theme-grid">
+
+      <div class="hh-theme-card">
+        <div class="hh-theme-card-title">Staff experience, care &amp; culture</div>
+        <div class="hh-theme-card-count">14 / 28 responses &mdash; new &amp; returning</div>
+        <div class="hh-theme-card-body">The strongest and most consistent theme. Returning staff describe a culture that has improved meaningfully over time; new staff arrive and immediately notice the care as something distinctive.</div>
+        <button class="hh-quotes-toggle" onclick="toggleQuotes(this)">Show responses &darr;</button>
+        <div class="hh-quotes">
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "Deep care for employees and guests. Management really tries to uphold the mission statement of HH — the heart and soul of Hollyhock campus management is lovely. Wonderful people, spirit and intention."</div>
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "Hollyhock is an incredibly inclusive workplace that puts employee welfare high on the agenda."</div>
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "Working on improving campus staff experience. There has been a positive shift in valuing campus staff with wage increases and more onsite perks. This goes a long way and translates into a higher quality guest experience. Moving in this direction will hopefully increase staff retention and seasonal return staff."</div>
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "Carrying for others. Offering an enriched environment."</div>
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "Strong work ethic and work ambiance setting."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Supportive work environment where people's unique qualities are celebrated and welcome (attracts great human beings), growth opportunities for staff and guests, so many perks, staff enrichment and connection opportunities are always warm and fun, staff retention: people come back year after year because it's a great company to work for, deepening relationships with indigenous groups and the land, gratitude practices, meaningful work."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Investing in staff experience."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Getting better at supporting onsite staff."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Creating a positive work environment."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Always finding a solution fast and being caring."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Better wages, trying to pay more attention to staff experience and staff needs."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "I think Hollyhock is doing well at trying to support a wide range of staff with a wide array of skills and needs."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "We have such a great staff cohort and all of the perks are wonderful. The garden and the restaurant are such beautiful connecting places. The wage raise was also greatly appreciated this year. The mission to create a vibrant and healthy community at Hollyhock that extends out into the larger world is meaningful and inspiring. The land stewardship and teachings about this specific place we live are also deeply appreciated."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Staff community."</div>
+        </div>
+      </div>
+
+      <div class="hh-theme-card">
+        <div class="hh-theme-card-title">Wages &amp; compensation</div>
+        <div class="hh-theme-card-count">6 / 28 responses &mdash; mostly returning</div>
+        <div class="hh-theme-card-body">The 2025 wage increase was mentioned spontaneously by six respondents. Returning staff credit it as recognition of their value; at least one new staff member also noticed the shift. This is the highest-frequency concrete organizational action called out.</div>
+        <button class="hh-quotes-toggle" onclick="toggleQuotes(this)">Show responses &darr;</button>
+        <div class="hh-quotes">
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "Working on improving campus staff experience. There has been a positive shift in valuing campus staff with wage increases and more onsite perks."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Wage lift was awesome."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Increased wages."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Better wages, trying to pay more attention to staff experience and staff needs."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "The wage raise was also greatly appreciated this year."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Acknowledging staff importance by raising wages."</div>
+        </div>
+      </div>
+
+      <div class="hh-theme-card">
+        <div class="hh-theme-card-title">Guest experience &amp; programming</div>
+        <div class="hh-theme-card-count">6 / 28 responses &mdash; mostly returning</div>
+        <div class="hh-theme-card-body">Staff take pride in the quality of what Hollyhock delivers to guests. New staff echo this around team culture and the guest experience without the historical comparison returning staff bring.</div>
+        <button class="hh-quotes-toggle" onclick="toggleQuotes(this)">Show responses &darr;</button>
+        <div class="hh-quotes">
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "Guest experience, team culture of helping and supporting each other."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Generally providing guests with a positive and enriching experience."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Delivering powerful experiences for guests."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Communicating more (ex: The Sun) about campus operations, programming really amazing presenters, caring for the staff experience as much as the participant experience."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "The mission to create a vibrant and healthy community at Hollyhock that extends out into the larger world is meaningful and inspiring."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Job elements are good. Laundry is done well, food is good, etc."</div>
+        </div>
+      </div>
+
+      <div class="hh-theme-card">
+        <div class="hh-theme-card-title">Food &amp; physical spaces</div>
+        <div class="hh-theme-card-count">6 / 28 responses &mdash; new &amp; returning</div>
+        <div class="hh-theme-card-body">Food is consistently named, aligning with its rank as the top perk above. The garden, restaurant, and physical setting are framed as connective tissue for community.</div>
+        <button class="hh-quotes-toggle" onclick="toggleQuotes(this)">Show responses &darr;</button>
+        <div class="hh-quotes">
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "Healthy yummy food."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Great food."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "The food has been great this year."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "The garden and the restaurant are such beautiful connecting places."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Job elements are good. Laundry is done well, food is good, etc."</div>
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "giving a lot of trust to the guests, what creates a feeling of home."</div>
+        </div>
+      </div>
+
+      <div class="hh-theme-card">
+        <div class="hh-theme-card-title">Diversity, land stewardship &amp; indigenous relations</div>
+        <div class="hh-theme-card-count">3 / 28 responses &mdash; returning only</div>
+        <div class="hh-theme-card-body">Named exclusively by returning staff, reflecting the depth of relationship that develops with place over time. These respondents frame land-based learning and indigenous partnerships as a core organizational strength, not a program.</div>
+        <button class="hh-quotes-toggle" onclick="toggleQuotes(this)">Show responses &darr;</button>
+        <div class="hh-quotes">
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Reaching out to Community and diversifying guests and staff."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Deepening relationships with indigenous groups and the land, gratitude practices, meaningful work. The land stewardship and teachings about this specific place we live are also deeply appreciated. (Bill's nature walks and bird walks... Brenda and Rose... more of these sorts of teachings please!). The offerings from elders are so important."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Supportive work environment where people's unique qualities are celebrated and welcome ... deepening relationships with indigenous groups and the land, gratitude practices, meaningful work."</div>
+        </div>
+      </div>
+
+      <div class="hh-theme-card">
+        <div class="hh-theme-card-title">Communication &amp; transparency efforts</div>
+        <div class="hh-theme-card-count">3 / 28 responses &mdash; new &amp; returning</div>
+        <div class="hh-theme-card-body">A smaller theme in this question, but notable because communication recurs as the dominant improvement area in later responses. Where it works, staff notice and appreciate it.</div>
+        <button class="hh-quotes-toggle" onclick="toggleQuotes(this)">Show responses &darr;</button>
+        <div class="hh-quotes">
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "It strives to maintain effective communication through various channels, for example 'The Hollyhock Sun - News For You' which I enjoy reading every week. It cares for employees to express their concerns and suggestions, creating opportunities to express them."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Communicating more (ex: The Sun) about campus operations, programming really amazing presenters, caring for the staff experience as much as the participant experience."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Reaching out to Community and diversifying guests and staff."</div>
+        </div>
+      </div>
+
+    </div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="hh-chart-wrap" style="margin-bottom:1.25rem;">
+    <div class="hh-card-toggle" onclick="toggleCard(this)">
+      <div style="flex:1; min-width:0;">
+        <div class="hh-chart-title" style="font-size:14px;">What is something Hollyhock as an organisation could improve on?</div>
+        <div class="hh-qual-summary">
+          Responses here were candid and often specific. Communication failures, training gaps, and workload pressure emerged as the clearest organizational signals — and notably, new staff named the same problems as returning staff on arrival, before accumulated context would explain the frustration. A small number of responses raise concerns that are lower frequency but higher stakes: conflict left unresolved, compensation inequity, and one detailed account of kitchen hygiene that warrants direct follow-up regardless of how many people raised it.
+        </div>
+      </div>
+      <div class="hh-card-expand"><span class="hh-card-expand-label">View themes</span><span class="hh-card-chevron">&#8250;</span></div>
+    </div>
+    <div class="hh-collapsible">
+    <div class="hh-theme-grid">
+
+      <div class="hh-theme-card">
+        <div class="hh-theme-card-title">Communication &amp; interdepartmental coordination</div>
+        <div class="hh-theme-card-count">9 / 28 responses &mdash; new &amp; returning</div>
+        <div class="hh-theme-card-body">The single most common improvement theme. Returning staff describe it as a systemic cost in time, money, and institutional memory. New staff arrive and notice the gaps immediately, strengthening this signal considerably.</div>
+        <button class="hh-quotes-toggle" onclick="toggleQuotes(this)">Show responses &darr;</button>
+        <div class="hh-quotes">
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "Communication between Supervisor/Manager/Department. General inspection of equipment and working procedures."</div>
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "Cross team communication could be improved, as well as direct communication of what is needed and expected. This could be by making the all-team weekly meeting a time to share big current projects and deadlines, and provide an opportunity for teams to identify areas of crossover or head off potential issues before they arise."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "COMMUNICATION!!! So much inefficiency, time and money wasted due to ineffective or non-communication between depts, silo-ing or lost organizational knowledge when people leave as there's often little or no training manuals made before their departure."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Email culture."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Clarity and communication of our mission."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "I feel that we could improve on interdepartmental systems and processes — and subsequently a little bit of that is communication. That said, I think we're already working on this."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Focusing on practicality and realistic goals, listening to department needs, and campus-life experience."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "For persons in leadership positions to better understand the culture that goes on in each department — the challenges they face and what key players would wish to see insofar as change."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Collaborative decision making."</div>
+        </div>
+      </div>
+
+      <div class="hh-theme-card">
+        <div class="hh-theme-card-title">Training, onboarding &amp; procedure documentation</div>
+        <div class="hh-theme-card-count">6 / 28 responses &mdash; new &amp; returning</div>
+        <div class="hh-theme-card-body">New staff are notably more direct about onboarding gaps; returning staff frame it as professional development. Together they identify both ends of the training pipeline. Procedure manuals are called out specifically.</div>
+        <button class="hh-quotes-toggle" onclick="toggleQuotes(this)">Show responses &darr;</button>
+        <div class="hh-quotes">
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "Better quality and longer onboarding training. Update/creation of procedure manuals for each position. Complimentary meals while on shift or the option of a staff meal plan."</div>
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "It could be good to find out the strengths and interests of the employees to see if they might be able to contribute in better ways, even in a volunteer capacity alongside the jobs they've been hired for. I believe most people drawn to Hollyhock are life-long learners who have much to offer."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Providing better support and training to staff."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Better training for new staff."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Staff training in order to grow — individual, professional and as a whole."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "I think Hollyhock could improve on offering professional development that can help staff grow and develop their skills and strengths and expand their skills and professionally develop in new ways."</div>
+        </div>
+      </div>
+
+      <div class="hh-theme-card">
+        <div class="hh-theme-card-title">Staff consultation &amp; collaborative decision-making</div>
+        <div class="hh-theme-card-count">4 / 28 responses &mdash; returning only</div>
+        <div class="hh-theme-card-body">All four responses came from returning staff, who have enough context to recognize when decisions are made without their input. The concern is not about the decisions themselves but about being consulted before, not informed after.</div>
+        <button class="hh-quotes-toggle" onclick="toggleQuotes(this)">Show responses &darr;</button>
+        <div class="hh-quotes">
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Collaborative decision making."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "When making changes I think it is essential that staff are consulted and actually listened to, no one person has all the information. Especially the staff who will have to carry out the work to implement the change or deal with the outcomes of the change."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "For persons in leadership positions to better understand the culture that goes on in each department — the challenges they face and what key players would wish to see insofar as change."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Focusing on practicality and realistic goals, listening to department needs, and campus-life experience. Not hiring out of desperation, better background checks and more respectful and considerate decisions around staff housing."</div>
+        </div>
+      </div>
+
+      <div class="hh-theme-card">
+        <div class="hh-theme-card-title">Workload, burnout &amp; hustle culture</div>
+        <div class="hh-theme-card-count">4 / 28 responses &mdash; new &amp; returning</div>
+        <div class="hh-theme-card-body">Returning staff describe burnout as a structural cycle; new staff name the culture directly. The new staff framing ("hustle/urgency culture") is the explicit label for what returning staff describe in behavioral terms.</div>
+        <button class="hh-quotes-toggle" onclick="toggleQuotes(this)">Show responses &darr;</button>
+        <div class="hh-quotes">
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "Hustle/urgency culture, overwork, new processes and systems to improve workflow, reduce number of meetings, encourage staff to take lieu time, block calendars, etc."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Summer will always be a busy season but resources can feel delicate — as soon as someone is sick or unwell, it throws off the balance and mental states can decline quickly. When other depts have to 'pick up the work,' it begins to add load and during the busy season, it's hard to actually use up the lieu time so we get into wellness debt. Once the season is over, the burnout is SO real that the recovery time cuts into next year's planning, and cascades into already feeling 'behind'."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Long term planning."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "I think ES has been making improvements over the years but I think our Core presenters could be even more streamlined with standard ES operating procedures, expectations, and prep."</div>
+        </div>
+      </div>
+
+      <div class="hh-theme-card">
+        <div class="hh-theme-card-title">Wages &amp; compensation equity</div>
+        <div class="hh-theme-card-count">4 / 28 responses &mdash; new &amp; returning</div>
+        <div class="hh-theme-card-body">Despite Q1 praise for the wage increase, some respondents still raise wage concerns. Returning staff focus on internal equity; new staff raise absolute wage levels.</div>
+        <button class="hh-quotes-toggle" onclick="toggleQuotes(this)">Show responses &darr;</button>
+        <div class="hh-quotes">
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "It seems like there is always budget concerns. It would take a big re-structuring, but I'm curious what could be done to support better wages for employees and also sustain the organization. The low wage was my only concern this season. Otherwise, I had a great season."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Pay the bodyworkers reasonably."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Wage ratio."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "There's no wage transparency into SLT and upper management wages."</div>
+        </div>
+      </div>
+
+      <div class="hh-theme-card">
+        <div class="hh-theme-card-title">Conflict resolution &amp; staff housing</div>
+        <div class="hh-theme-card-count">2 / 28 responses &mdash; returning only</div>
+        <div class="hh-theme-card-body">Two returning staff raise conflict as inadequately resolved this season. Housing is named as a compounding factor, since problematic co-workers are also co-habitants.</div>
+        <button class="hh-quotes-toggle" onclick="toggleQuotes(this)">Show responses &darr;</button>
+        <div class="hh-quotes">
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Helping people understand one another. Many conflicts this year went unsatisfactorily unresolved, some were despicable."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "The problem with retaining employees who don't work well and aren't respectful to live with is that wholesome professionals will not want to come back if it means that they have to live with chaotic people. I think clear protocols need to be put into practice in order to assure the quick outflow of inadequate workers/roommates."</div>
+        </div>
+      </div>
+
+      <div class="hh-singles-card" style="grid-column: 1 / -1;">
+        <div class="hh-singles-title">Noted, not recurring</div>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem;">
+          <div>
+            <div class="hh-singles-theme">24/7 staffing coverage &mdash; new staff</div>
+            <div class="hh-singles-quote">"I think it would be good if there would be at least one staff member around 24/7 when guests are in, so that whatever situation occurs, there is someone in person to speak to."</div>
+          </div>
+          <div>
+            <div class="hh-singles-theme">Internship &amp; hiring practices &mdash; returning staff</div>
+            <div class="hh-singles-quote">"I've noticed a growing emphasis on adopting certain American internship practices, which seem to prioritize candidates from privileged or elite educational backgrounds. This approach can feel more like a branding exercise than one grounded in our core values. I believe the organisation could explore more inclusive and locally grounded pathways for bringing in new talent — ones that focus on genuine alignment with our mission rather than prestige."</div>
+          </div>
+          <div>
+            <div class="hh-singles-theme">Food safety &amp; kitchen sanitation &mdash; returning staff</div>
+            <div class="hh-singles-quote">"Please improve sanitation and cleanliness standards in the kitchen. It's beyond unsanitary, with almost all cooks fully licking the stirring/serving spoons while cooking, then right back into the pots, even when they're sick. Licking fingers or full hands and then tossing salads with said unwashed hands. Dropping things on the floor and continuing to chop them. There seems to be zero cleanliness training. Also please get sneeze guards for the buffet and some kind of cleanliness protocols in place."</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="hh-chart-wrap" style="margin-bottom:1.25rem;">
+    <div class="hh-card-toggle" onclick="toggleCard(this)">
+      <div style="flex:1; min-width:0;">
+        <div class="hh-chart-title" style="font-size:14px;">What does "organizational transparency" in a workplace mean for you?</div>
+        <div class="hh-qual-summary">
+          Staff across both groups define transparency primarily as clear, timely communication about decisions and the reasoning behind them. Returning staff extend that definition further, adding psychological safety and protected feedback channels as essential components. New staff are more likely to frame it in operational terms — knowing their role, having access to organizational information. Where the groups converge, the definition is consistent: transparency means being brought into the "why," not just the "what."
+        </div>
+      </div>
+      <div class="hh-card-expand"><span class="hh-card-expand-label">View themes</span><span class="hh-card-chevron">&#8250;</span></div>
+    </div>
+    <div class="hh-collapsible">
+    <div class="hh-theme-grid">
+
+      <div class="hh-theme-card">
+        <div class="hh-theme-card-title">Open, timely communication about decisions</div>
+        <div class="hh-theme-card-count">12 / 24 responses &mdash; new &amp; returning</div>
+        <div class="hh-theme-card-body">The dominant definition. Staff understand transparency as leadership communicating clearly about decisions, especially those that affect staff themselves, with enough context to understand the reasoning, not just the outcome.</div>
+        <button class="hh-quotes-toggle" onclick="toggleQuotes(this)">Show responses &darr;</button>
+        <div class="hh-quotes">
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "When an organization is open and honest about the company's goals, mission, vision, strategy, financials, challenges, etc. with all partners, including staff — and where everyone is accountable for their actions, trust is built, and communication is prioritized."</div>
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "Openly sharing information with employees, such as decisions, processes and performance."</div>
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "Hmm. I'd imagine just being clear on the goals of the organization and of the roles within it."</div>
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "openness and honesty with the management details and structure of the organization."</div>
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "To me, this means being open with the organizations aims, challenges, and plans."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "It means that decisions are made with appropriate levels of consultation, and that people impacted are informed in a timely manner and also in an effective way so they actually receive the information that allows them to understand how their leadership operates."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Staff understand what the organisation is doing and why and feel confident to support organisational decision making and direction in the community."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "To have senior managers and executives be completely open and honest with staff members."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Clear and timely communication around decisions that affect onsite staff and the campus."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Sharing facts rather than smooth talking."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Clear communication."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Understanding how and why decisions are made."</div>
+        </div>
+      </div>
+
+      <div class="hh-theme-card">
+        <div class="hh-theme-card-title">Psychological safety to speak up</div>
+        <div class="hh-theme-card-count">5 / 24 responses &mdash; returning only</div>
+        <div class="hh-theme-card-body">All responses came from returning staff. Transparency is not just top-down information flow but requires conditions where staff can raise concerns and give feedback without fear of penalty. This connects directly to the empowerment gap noted above.</div>
+        <button class="hh-quotes-toggle" onclick="toggleQuotes(this)">Show responses &darr;</button>
+        <div class="hh-quotes">
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Being able to openly dialogue challenging or vulnerable topics without fear of being penalized or dismissed."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Honest and open communication, room for questions and feedback."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "The SLT and Board are willing to communicate openly with staff about strategic plans, organizational changes, goals, intentions, and changes to process. I think it also means that there is an open channel for feedback where staff can communicate without fear of being penalized. And that their privacy around such feedback is respected and protected."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "The ability to communicate openly when things are going well, but also in challenging situations — things that are unfortunately lacking, because management is operating out of fear and scarcity, and this vibration trickles down to everyone."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "Things are open where possible."</div>
+        </div>
+      </div>
+
+      <div class="hh-theme-card">
+        <div class="hh-theme-card-title">Wage &amp; financial transparency</div>
+        <div class="hh-theme-card-count">3 / 24 responses &mdash; new &amp; returning</div>
+        <div class="hh-theme-card-body">Both new and returning staff name financial and wage transparency as part of their definition. New staff frame it broadly; returning staff are more specific about SLT compensation and campus/remote wage bands.</div>
+        <button class="hh-quotes-toggle" onclick="toggleQuotes(this)">Show responses &darr;</button>
+        <div class="hh-quotes">
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "Wage transparency. Equal opportunity to new and open positions both internally and publicly. Equal opportunity to perks. Managerial decisions, policy changes, budget allocations shared within the organization and accessible to all."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "SLT and upper management wage transparency for all staff. Remote and campus wage bands and how and why they differ. Transparency when making large decisions that will affect the whole organization and everyone's jobs."</div>
+          <div class="hh-quote"><span class="hh-quote-tag ret">RET</span> "There's no wage transparency into SLT and upper management wages."</div>
+        </div>
+      </div>
+
+      <div class="hh-theme-card">
+        <div class="hh-theme-card-title">Role &amp; process clarity</div>
+        <div class="hh-theme-card-count">3 / 24 responses &mdash; new staff only</div>
+        <div class="hh-theme-card-body">A theme contributed entirely by new staff, who define transparency partly as knowing what their role requires and how things work, a more operational lens than the governance-focused definitions from returning staff.</div>
+        <button class="hh-quotes-toggle" onclick="toggleQuotes(this)">Show responses &darr;</button>
+        <div class="hh-quotes">
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "That the roles, tasks and responsibilities are clear."</div>
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "Hmm. I'd imagine just being clear on the goals of the organization and of the roles within it."</div>
+          <div class="hh-quote"><span class="hh-quote-tag new">NEW</span> "When something should be confidential it should stay confidential so people don't start gossiping."</div>
+        </div>
+      </div>
+
+      <div class="hh-singles-card" style="grid-column: span 2;">
+        <div class="hh-singles-title">Noted, not recurring</div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1rem;">
+          <div>
+            <div class="hh-singles-theme">Calibrated openness &mdash; returning staff</div>
+            <div class="hh-singles-quote">"The staff are brought into the loop when it comes to change, planning, and direction. It sounds strange, but some transparency is good, too much can cause concern or be ineffective."</div>
+          </div>
+          <div>
+            <div class="hh-singles-theme">Organizational standing &mdash; returning staff</div>
+            <div class="hh-singles-quote">"That everyone is on the level with how the organisation is doing, what it is claiming to stand for and what it intends to become."</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    </div>
+  </div>
+
+  <hr class="hh-divider">
+
+  <div class="hh-section-label">Cross-Question Synthesis</div>
+  <div class="hh-section-title">Signals Across the Dataset</div>
+
+  <div class="hh-chart-wrap">
+    <div class="hh-synth-list">
+
+      <div class="hh-synth-card followup" style="grid-column: 1 / -1;">
+        <div class="hh-synth-header" onclick="toggleSynth(this)">
+          <div class="hh-synth-meta"><span class="hh-synth-tag followup">Requires follow-up</span><span class="hh-synth-title">Food safety concern</span></div>
+          <span class="hh-synth-chevron">&#8250;</span>
+        </div>
+        <div class="hh-synth-body">
+          <div class="hh-synth-text">One Q2 response contains detailed, specific allegations about kitchen hygiene practices. This is a single respondent and should not be treated as a widespread complaint. However, the specificity, urgency, and health/liability implications mean it should be investigated directly. It cannot be averaged away by its frequency in the data.</div>
+        </div>
+      </div>
+
+      <div class="hh-synth-card culture">
+        <div class="hh-synth-header" onclick="toggleSynth(this)">
+          <div class="hh-synth-meta"><span class="hh-synth-tag culture">Culture</span><span class="hh-synth-title">Burnout is structural; hustle culture is its name</span></div>
+          <span class="hh-synth-chevron">&#8250;</span>
+        </div>
+        <div class="hh-synth-body">
+          <div class="hh-synth-text">The quantitative data shows a 25-point gap in workload concerns between new and returning staff. The Q2 open text explains the mechanism: a seasonal cycle where burnout recovery eats into next-season planning. A new staff respondent names this directly as hustle/urgency culture and offers concrete countermeasures. The two framings together make a stronger case for structural intervention than either would alone.</div>
+        </div>
+      </div>
+
+      <div class="hh-synth-card culture">
+        <div class="hh-synth-header" onclick="toggleSynth(this)">
+          <div class="hh-synth-meta"><span class="hh-synth-tag culture">Culture</span><span class="hh-synth-title">Returning staff apply a more critical lens to transparency</span></div>
+          <span class="hh-synth-chevron">&#8250;</span>
+        </div>
+        <div class="hh-synth-body">
+          <div class="hh-synth-text">In Q3, new staff define transparency in terms of role and process clarity. Returning staff include that, but extend it to psychological safety and the ability to give feedback without fear. The most pointed response in the dataset came from a returning staff member. This is consistent with empowerment scores not improving with tenure in the quantitative data.</div>
+        </div>
+      </div>
+
+      <div class="hh-synth-card structural">
+        <div class="hh-synth-header" onclick="toggleSynth(this)">
+          <div class="hh-synth-meta"><span class="hh-synth-tag structural">Structural</span><span class="hh-synth-title">Communication is the central organizational concern</span></div>
+          <span class="hh-synth-chevron">&#8250;</span>
+        </div>
+        <div class="hh-synth-body">
+          <div class="hh-synth-text">Communication problems surface in every question and from both new and returning staff. In Q1 it appears as a strength (the Hollyhock Sun, feedback channels). In Q2 it is the most common improvement theme (9/28 responses). In Q3, transparent and timely communication is the dominant definition of what organizational transparency even means. The new/returning convergence rules out a tenure-specific frustration.</div>
+        </div>
+      </div>
+
+      <div class="hh-synth-card structural">
+        <div class="hh-synth-header" onclick="toggleSynth(this)">
+          <div class="hh-synth-meta"><span class="hh-synth-tag structural">Structural</span><span class="hh-synth-title">New staff name the same problems as returning staff, but faster</span></div>
+          <span class="hh-synth-chevron">&#8250;</span>
+        </div>
+        <div class="hh-synth-body">
+          <div class="hh-synth-text">New staff are not yet habituated to the organization friction points, so their observations are fresh and unfiltered. They independently flag communication gaps, onboarding inadequacy, and hustle culture -- the same structural concerns that returning staff describe with years of accumulated context. When both groups arrive at the same diagnosis from different vantage points, the signal is robust.</div>
+        </div>
+      </div>
+
+      <div class="hh-synth-card structural">
+        <div class="hh-synth-header" onclick="toggleSynth(this)">
+          <div class="hh-synth-meta"><span class="hh-synth-tag structural">Structural</span><span class="hh-synth-title">Onboarding is a specific and actionable gap</span></div>
+          <span class="hh-synth-chevron">&#8250;</span>
+        </div>
+        <div class="hh-synth-body">
+          <div class="hh-synth-text">New staff are considerably more direct about onboarding than returning staff, who frame the issue as professional development. New staff specifically name: longer onboarding duration, procedure manuals by role, and better use of existing staff skills and knowledge. These are discrete, implementable asks rather than general sentiment.</div>
+        </div>
+      </div>
+
+      <div class="hh-synth-card structural">
+        <div class="hh-synth-header" onclick="toggleSynth(this)">
+          <div class="hh-synth-meta"><span class="hh-synth-tag structural">Structural</span><span class="hh-synth-title">Wage progress is recognized, but equity and transparency gaps remain</span></div>
+          <span class="hh-synth-chevron">&#8250;</span>
+        </div>
+        <div class="hh-synth-body">
+          <div class="hh-synth-text">The 2025 wage increase drew spontaneous praise from six respondents in Q1, from both new and returning staff. Yet Q2 and Q3 both surface wage concerns: bodyworker pay, remote vs. campus wage bands, SLT salary visibility, and for new staff, absolute wage levels. Leadership should not read Q1 praise as full closure -- the appreciation and the concern coexist in the same dataset.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const mean = arr => arr.reduce((a,b)=>a+b,0)/arr.length;
+
+new Chart(document.getElementById('tenureChart'), {
+  type: 'doughnut',
+  data: { labels: ['1 year or less','2–4 seasons','5–7 seasons','8+ seasons'], datasets: [{ data: [32.1,42.9,10.7,14.3], backgroundColor: ['#233C4D','#427C7D','#D6AD60','#CA5757'], borderWidth: 0 }] },
+  options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed + '%' } } } }
+});
+
+new Chart(document.getElementById('newChart'), {
+  type: 'doughnut',
+  data: { labels: ['Returning','New'], datasets: [{ data: [67.9,32.1], backgroundColor: ['#233C4D','#D6AD60'], borderWidth: 0 }] },
+  options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed + '%' } } } }
+});
+
+new Chart(document.getElementById('transpChart'), {
+  type: 'bar',
+  data: { labels: ['Improved','Stayed the same','Declined'], datasets: [{ data: [35.7,21.4,10.7], backgroundColor: ['#427C7D','#D6AD60','#CA5757'], borderRadius: 6, borderSkipped: false }] },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed.y + '%' } } }, scales: { x: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#555' } }, y: { grid: { color: '#eee' }, ticks: { callback: v => v+'%', font: { size: 11 }, color: '#888' }, max: 50 } } }
+});
+
+new Chart(document.getElementById('burrowChart'), {
+  type: 'bar',
+  data: { labels: ['Yes','No','Turn it back','What is it?'], datasets: [{ data: [46.4,46.4,3.6,3.6], backgroundColor: ['#233C4D','#427C7D','#D6AD60','#CA5757'], borderRadius: 6, borderSkipped: false }] },
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed.y + '%' } } }, scales: { x: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#555' } }, y: { grid: { color: '#eee' }, ticks: { callback: v => v+'%', font: { size: 11 }, color: '#888' }, max: 60 } } }
+});
+
+const barOpts = (max) => ({
+  responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+  plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed.x + '%' } } },
+  scales: { x: { grid: { color: '#eee' }, ticks: { callback: v => v+'%', font: { size: 10 }, color: '#888' }, max: max }, y: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#444' } } }
+});
+
+const groupedBarOpts = (max) => ({
+  responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+  plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ' + ctx.parsed.x.toFixed(1) + '%' } } },
+  scales: { x: { grid: { color: '#eee' }, ticks: { callback: v => v+'%', font: { size: 10 }, color: '#888' }, max: max }, y: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#444' } } }
+});
+
+const stackedBarOpts = (max) => ({
+  responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+  plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ' + ctx.parsed.x.toFixed(1) + '%' } } },
+  scales: { x: { stacked: true, grid: { color: '#eee' }, ticks: { callback: v => v+'%', font: { size: 10 }, color: '#888' }, max: max }, y: { stacked: true, grid: { display: false }, ticks: { font: { size: 10 }, color: '#444' } } }
+});
+
+new Chart(document.getElementById('joinChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Competitive pay','Seasonal opportunity','Perks','Need income','Staff community','Values alignment','Location'],
+    datasets: [
+      { label: 'New (n=9)',       data: [7.1,10.7,7.1,14.3,10.7,21.4,17.9], backgroundColor: '#D6AD60', borderRadius: 0, borderSkipped: false },
+      { label: 'Returning (n=19)',data: [21.4,17.9,32.1,39.3,46.4,39.3,42.9], backgroundColor: '#233C4D', borderRadius: { topRight: 4, bottomRight: 4, topLeft: 0, bottomLeft: 0 }, borderSkipped: false }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.x.toFixed(1)}%` } }
+    },
+    scales: {
+      x: { stacked: true, grid: { color: '#eee' }, ticks: { callback: v => v+'%', font: { size: 10 }, color: '#888' }, max: 80 },
+      y: { stacked: true, grid: { display: false }, ticks: { font: { size: 10 }, color: '#444' } }
+    }
+  }
+});
+
+new Chart(document.getElementById('trainingChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Gender Diversity','Antiracism','I.T. Skills','De-escalation','Leadership Skills','Communication','Conflict Engagement/Resolution','Mental Health First Aid'],
+    datasets: [
+      { label: 'Seasonal (n=18)',   data: [7.4,11.1,14.8,22.2,29.6,40.7,33.3,37.0], backgroundColor: '#427C7D', borderRadius: 0, borderSkipped: false },
+      { label: 'Year-round (n=9)', data: [7.4,14.8,11.1,22.2,18.5,14.8,25.9,29.6], backgroundColor: '#CA5757', borderRadius: { topRight: 4, bottomRight: 4, topLeft: 0, bottomLeft: 0 }, borderSkipped: false }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.x.toFixed(1)}%` } }
+    },
+    scales: {
+      x: { stacked: true, grid: { color: '#eee' }, ticks: { callback: v => v+'%', font: { size: 10 }, color: '#888' }, max: 80 },
+      y: { stacked: true, grid: { display: false }, ticks: { font: { size: 10 }, color: '#444' } }
+    }
+  }
+});
+
+new Chart(document.getElementById('perkChart'), {
+  type: 'bar',
+  data: { labels: ['Spa','Complimentary program','Breakfast','Magic meals fridge','Activities'], datasets: [{ data: [25.0,21.4,21.4,10.7,3.6], backgroundColor: ['#233C4D','#427C7D','#D6AD60','#CA5757','#CA5757'], borderRadius: 4, borderSkipped: false }] },
+  options: barOpts(40)
+});
+
+new Chart(document.getElementById('teamChart'), {
+  type: 'bar',
+  data: { labels: ['Outdoor activities','Parties','Meetings','Movie nights','Games'], datasets: [{ data: [76.0,44.0,36.0,32.0,28.0], backgroundColor: ['#233C4D','#427C7D','#427C7D','#D6AD60','#D6AD60'], borderRadius: 4, borderSkipped: false }] },
+  options: barOpts(90)
+});
+
+new Chart(document.getElementById('rewardGroupChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Coworkers & colleagues','Natural / remote setting','Mission','Professional growth','Gratitude from guests'],
+    datasets: [
+      { label: 'New staff',  data: [28.6, 17.9, 17.9, 14.3, 7.1], backgroundColor: '#D6AD60', borderRadius: 0, borderSkipped: false },
+      { label: 'Returning',  data: [50.0, 50.0, 21.4, 28.6, 17.8], backgroundColor: '#233C4D', borderRadius: { topRight: 4, bottomRight: 4, topLeft: 0, bottomLeft: 0 }, borderSkipped: false }
+    ]
+  },
+  options: stackedBarOpts(80)
+});
+
+new Chart(document.getElementById('challengeGroupChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Workload','Compensation / benefits','Insufficient training','Coworkers & colleagues','Remote setting'],
+    datasets: [
+      { label: 'New staff',  data: [7.4, 7.4, 7.4, 0, 0],        backgroundColor: '#D6AD60', borderRadius: 0, borderSkipped: false },
+      { label: 'Returning',  data: [37.0, 22.2, 18.5, 11.1, 7.4], backgroundColor: '#233C4D', borderRadius: { topRight: 4, bottomRight: 4, topLeft: 0, bottomLeft: 0 }, borderSkipped: false }
+    ]
+  },
+  options: stackedBarOpts(50)
+});
+
+new Chart(document.getElementById('rewardTenureChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Coworkers & colleagues','Natural / remote setting','Mission','Professional growth','Gratitude from guests'],
+    datasets: [
+      { label: '1 season',     data: [88.9, 55.6, 55.6, 44.4, 22.2], backgroundColor: '#D6AD60', borderRadius: 4, borderSkipped: false },
+      { label: '2–4 seasons',  data: [75.0, 75.0, 33.3, 50.0, 41.7], backgroundColor: '#427C7D', borderRadius: 4, borderSkipped: false },
+      { label: '5–7 seasons',  data: [66.7, 100.0, 33.3, 33.3, 0],   backgroundColor: '#233C4D', borderRadius: 4, borderSkipped: false },
+      { label: '8+ seasons',   data: [75.0, 50.0, 25.0, 25.0, 0],    backgroundColor: '#95bc67', borderRadius: 4, borderSkipped: false }
+    ]
+  },
+  options: groupedBarOpts(110)
+});
+
+// Split paired connectedness/empowerment data by new vs. returning staff.
+const newConn = [4,4,2,4,4,4,3,4,2];
+const newEmp  = [5,4,2,3,3,3,3,1,3];
+const retConn = [4,5,3,4,3,4,4,4,4,2,4,4,4,4,5,4,4,4,5];
+const retEmp  = [3,5,3,5,3,4,4,2,5,1,4,5,5,4,4,3,4,4,3];
+
+// Combined arrays for regression calculation.
+const connected = [...newConn, ...retConn];
+const empowered = [...newEmp,  ...retEmp];
+
+const jitter = () => (Math.random()-0.5)*0.18;
+const newPoints = newConn.map((c,i) => ({ x: c+jitter(), y: newEmp[i]+jitter() }));
+const retPoints = retConn.map((c,i) => ({ x: c+jitter(), y: retEmp[i]+jitter() }));
+
+// Calculate least-squares linear regression from the raw (un-jittered) data.
+const n28 = connected.length;
+const sumX = connected.reduce((a,b) => a+b, 0);
+const sumY = empowered.reduce((a,b) => a+b, 0);
+const sumXY = connected.reduce((a,_,i) => a + connected[i]*empowered[i], 0);
+const sumX2 = connected.reduce((a,b) => a + b*b, 0);
+const slope = (n28*sumXY - sumX*sumY) / (n28*sumX2 - sumX*sumX);
+const intercept = (sumY - slope*sumX) / n28;
+const regLine = [{ x: 1, y: slope*1+intercept }, { x: 5, y: slope*5+intercept }];
+
+new Chart(document.getElementById('scatterChart'), {
+  type: 'scatter',
+  data: { datasets: [
+    { label: 'New (n=9)',       data: newPoints, backgroundColor: 'rgba(214,173,96,0.7)', pointRadius: 7, pointHoverRadius: 9 },
+    { label: 'Returning (n=19)', data: retPoints, backgroundColor: 'rgba(35,60,77,0.6)',  pointRadius: 7, pointHoverRadius: 9 },
+    { type: 'line', data: regLine, borderColor: '#CA5757', borderWidth: 2, pointRadius: 0, fill: false, tension: 0 }
+  ]},
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => {
+      const isNew = ctx.datasetIndex === 0;
+      const i = ctx.dataIndex;
+      const c = isNew ? newConn[i] : retConn[i];
+      const e = isNew ? newEmp[i]  : retEmp[i];
+      return `${isNew ? 'New' : 'Returning'} — Connected: ${c}  Empowered: ${e}`;
+    }}}},
+    scales: {
+      x: { title: { display: true, text: 'Connectedness with coworkers (1–5)', font: { size: 11 }, color: '#555' }, min: 0.5, max: 5.5, ticks: { stepSize: 1, callback: v => Number.isInteger(v)?v:'', color: '#888', font: { size: 11 } }, grid: { color: '#eee' } },
+      y: { title: { display: true, text: 'Empowerment to share differing opinions (1–5)', font: { size: 11 }, color: '#555' }, min: 0.5, max: 5.5, ticks: { stepSize: 1, callback: v => Number.isInteger(v)?v:'', color: '#888', font: { size: 11 } }, grid: { color: '#eee' } }
+    }
+  }
+});
+
+// On campus vs. remote scatter chart data.
+const campusConn = [4,5,3,4,4,4,2,3,4,4,4,4,2,4,4,4,4,5,3,4,4,4,5];
+const campusEmp  = [3,5,3,5,4,5,2,3,4,4,2,5,1,4,5,3,3,4,3,4,1,4,3];
+const remoteConn = [4,4,4,4,2];
+const remoteEmp  = [5,4,3,3,3];
+
+const campusPoints = campusConn.map((c,i) => ({ x: c+jitter(), y: campusEmp[i]+jitter() }));
+const remotePoints = remoteConn.map((c,i) => ({ x: c+jitter(), y: remoteEmp[i]+jitter() }));
+
+// Regression line for campus/remote combined (same overall dataset).
+const regLine2 = [{ x: 1, y: slope*1+intercept }, { x: 5, y: slope*5+intercept }];
+
+const scatterOpts2 = {
+  responsive: true, maintainAspectRatio: false,
+  plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => {
+    const isCampus = ctx.datasetIndex === 0;
+    const i = ctx.dataIndex;
+    const c = isCampus ? campusConn[i] : remoteConn[i];
+    const e = isCampus ? campusEmp[i]  : remoteEmp[i];
+    return `${isCampus ? 'On campus' : 'Remote'} — Connected: ${c}  Empowered: ${e}`;
+  }}}},
+  scales: {
+    x: { title: { display: true, text: 'Connectedness with coworkers (1–5)', font: { size: 11 }, color: '#555' }, min: 0.5, max: 5.5, ticks: { stepSize: 1, callback: v => Number.isInteger(v)?v:'', color: '#888', font: { size: 11 } }, grid: { color: '#eee' } },
+    y: { title: { display: true, text: 'Empowerment to share differing opinions (1–5)', font: { size: 11 }, color: '#555' }, min: 0.5, max: 5.5, ticks: { stepSize: 1, callback: v => Number.isInteger(v)?v:'', color: '#888', font: { size: 11 } }, grid: { color: '#eee' } }
+  }
+};
+
+new Chart(document.getElementById('scatterChart2'), {
+  type: 'scatter',
+  data: { datasets: [
+    { label: 'On campus (n=23)', data: campusPoints, backgroundColor: 'rgba(66,124,125,0.85)',  pointRadius: 7, pointHoverRadius: 9 },
+    { label: 'Remote (n=5)',     data: remotePoints, backgroundColor: 'rgba(202,87,87,0.8)',   pointRadius: 7, pointHoverRadius: 9 },
+    { type: 'line', data: regLine2, borderColor: '#CA5757', borderWidth: 2, pointRadius: 0, fill: false, tension: 0 }
+  ]},
+  options: scatterOpts2
+});
+
+const tenureData = {
+  connected: { '1 yr or less': [4,4,2,4,4,4,3,4,2], '2–4 seasons': [4,5,3,3,4,4,4,4,4,5,4,4], '5–7 seasons': [2,4,4], '8+ seasons': [4,4,4,5] },
+  empowered: { '1 yr or less': [5,4,2,3,3,3,3,1,3], '2–4 seasons': [3,5,3,3,4,5,4,5,4,4,3,4], '5–7 seasons': [1,5,4], '8+ seasons': [5,4,2,3] }
+};
+const tLabels = ['1 yr or less','2–4 seasons','5–7 seasons','8+ seasons'];
+const ns = tLabels.map(l => tenureData.connected[l].length);
+const connMeans = tLabels.map(l => parseFloat(mean(tenureData.connected[l]).toFixed(2)));
+const empMeans  = tLabels.map(l => parseFloat(mean(tenureData.empowered[l]).toFixed(2)));
+
+// Generate individual dot overlay datasets for each tenure group.
+// A hidden secondary linear x-axis (x2) is used to offset connectedness dots
+// slightly left and empowerment dots slightly right, placing them over their
+// respective bars. A small y-jitter separates overlapping values.
+const fullLabels = tLabels.map((l,i) => `${l} (n=${ns[i]})`);
+const jitterY = () => (Math.random()-0.5)*0.12;
+// Pre-calculate jitter values once so dots stay stable on hover redraws.
+const connJitter = tLabels.map(l => tenureData.connected[l].map(() => (Math.random()-0.5)*0.12));
+const empJitter  = tLabels.map(l => tenureData.empowered[l].map(() => (Math.random()-0.5)*0.12));
+
+// Plugin that draws individual data points directly onto the canvas after
+// the bars are rendered, using actual bar center x positions from chart metadata
+// so dots are always perfectly aligned regardless of chart or bar width.
+const tenureDotsPlugin = {
+  id: 'tenureDots',
+  afterDraw(chart) {
+    const ctx = chart.ctx;
+    const yScale = chart.scales.y;
+    const connMeta = chart.getDatasetMeta(0);
+    const empMeta  = chart.getDatasetMeta(1);
+    tLabels.forEach((l, gi) => {
+      tenureData.connected[l].forEach((v, i) => {
+        ctx.beginPath();
+        ctx.arc(connMeta.data[gi].x, yScale.getPixelForValue(v + connJitter[gi][i]), 4, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(149,188,103,0.4)';
+        ctx.fill();
+      });
+      tenureData.empowered[l].forEach((v, i) => {
+        ctx.beginPath();
+        ctx.arc(empMeta.data[gi].x, yScale.getPixelForValue(v + empJitter[gi][i]), 4, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(149,188,103,0.4)';
+        ctx.fill();
+      });
+    });
+  }
+};
+
+new Chart(document.getElementById('tenureGrouped'), {
+  type: 'bar',
+  data: {
+    labels: fullLabels,
+    datasets: [
+      { label: 'Connectedness', data: connMeans, backgroundColor: '#233C4D', borderRadius: 5, borderSkipped: false },
+      { label: 'Empowerment',   data: empMeans,  backgroundColor: '#427C7D', borderRadius: 5, borderSkipped: false }
+    ]
+  },
+  plugins: [tenureDotsPlugin],
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)}` } } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#444' } },
+      y: { min: 0, max: 5.8, grid: { color: '#eee' }, ticks: { stepSize: 1, callback: v => Number.isInteger(v) ? v : '', font: { size: 11 }, color: '#888' }, title: { display: true, text: 'Mean score (out of 5)', font: { size: 11 }, color: '#555' } }
+    }
+  }
+});
+
+document.getElementById('tenureInsight').innerHTML =
+  `<strong>Connectedness is consistently higher than empowerment across all tenure groups.</strong> ` +
+  `The 5–7 season group shows the widest gap, with the highest empowerment score (${empMeans[2].toFixed(2)}) but the lowest connectedness score (${connMeans[2].toFixed(2)}), though this group has only 3 respondents. ` +
+  `Staff with 8+ seasons report the highest connectedness (${connMeans[3].toFixed(2)}) while newer staff report the highest empowerment mean (${empMeans[0].toFixed(2)}), suggesting <strong>different dynamics at play across experience levels.</strong> ` +
+  `Across all respondents, empowerment scores vary considerably more than connectedness scores, meaning <strong>staff are more aligned in how connected they feel than in how safe they feel speaking up.</strong> ` +
+  `Notably, <strong>long-serving staff (8+ seasons) report the highest connectedness (${connMeans[3].toFixed(2)}) but their empowerment (${empMeans[3].toFixed(2)}) does not keep pace</strong>, sitting lower than the 2–4 season group (${empMeans[1].toFixed(2)}). Staff who feel most socially embedded are not necessarily those who feel most empowered to speak up.`;
+
+function toggleCard(toggle) {
+  const content = toggle.nextElementSibling;
+  const chevron = toggle.querySelector('.hh-card-chevron');
+  const label = toggle.querySelector('.hh-card-expand-label');
+  const isOpen = content.classList.toggle('open');
+  chevron.classList.toggle('open', isOpen);
+  label.textContent = isOpen ? 'Hide themes' : 'View themes';
+}
+
+function toggleSynth(header) {
+  const body = header.nextElementSibling;
+  const chevron = header.querySelector('.hh-synth-chevron');
+  const isOpen = body.classList.toggle('open');
+  chevron.classList.toggle('open', isOpen);
+}
+
+function toggleQuotes(btn) {
+  const quotesEl = btn.nextElementSibling;
+  const isOpen = quotesEl.classList.toggle('open');
+  btn.textContent = isOpen ? 'Hide responses \u2191' : 'Show responses \u2193';
+}
+
+</script>
+
+<!-- APPENDIX: moved to EoS Report PDF.html -->
+<div style="display:none;">
+  <div style="margin-bottom:1.5rem; border-bottom: 2px solid #233C4D; padding-bottom:0.75rem;">
+    <div style="font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#427C7D; margin-bottom:0.25rem;">Hollyhock · Internal</div>
+    <div style="font-size:20px; font-weight:600; color:#233C4D;">End of Season Staff Survey 2025 — Full Response Appendix</div>
+    <div style="font-size:11px; color:#666; margin-top:0.35rem;">All open-ended and custom responses, listed in survey order. New and returning staff responses are combined. Multi-select responses reflect each respondent's full selection.</div>
+  </div>
+
+      <div class="hh-app-q">
+        <div class="hh-app-q-title">Why did you join, return to, or stay at Hollyhock?</div>
+        <ol class="hh-app-list">
+          <li>Values alignment, Location, Perks (comp program, yoga classes, extracurriculars), Community with other staff, Need an income to live</li>
+          <li>Location, Community with other staff, Need an income to live</li>
+          <li>Values alignment, Competitive pay, Location, Seasonal opportunity, Perks (comp program, yoga classes, extracurriculars), Space away from city-living for study</li>
+          <li>Values alignment</li>
+          <li>Values alignment, Location, Perks (comp program, yoga classes, extracurriculars, spa), Community with other staff</li>
+          <li>Values alignment, Location, Community with other staff, Need an income to live</li>
+          <li>Location, Seasonal opportunity, Amazing food</li>
+          <li>Part of my &quot;retirement&quot; plan, i.e. contributing and giving back to a place i love and which has given me much in past decades.</li>
+          <li>Competitive pay, Perks (comp program, yoga classes, extracurriculars), Community with other staff, Need an income to live</li>
+          <li>Location, Perks (comp program, yoga classes, extracurriculars), Community with other staff, Need an income to live</li>
+          <li>Values alignment</li>
+          <li>I love how inviting everyone is.</li>
+          <li>Values alignment, Seasonal opportunity</li>
+          <li>Values alignment, Competitive pay, Location, Community with other staff, Need an income to live</li>
+          <li>Values alignment, Competitive pay, Perks (comp program, yoga classes, extracurriculars), Community with other staff</li>
+          <li>Values alignment, Location</li>
+          <li>Values alignment, Competitive pay, Location, Seasonal opportunity, Need an income to live, I came for the location and fell in love with it for so many reasons. I felt cared for and appreciated.</li>
+          <li>Location, Need an income to live</li>
+          <li>Values alignment, Location, Perks (comp program, yoga classes, extracurriculars), Community with other staff, Need an income to live</li>
+          <li>Values alignment, Competitive pay, Location, Seasonal opportunity, Perks (comp program, yoga classes, extracurriculars), Community with other staff, Need an income to live</li>
+          <li>Values alignment, Perks (comp program, yoga classes, extracurriculars), Community with other staff, Need an income to live</li>
+          <li>Values alignment, Community with other staff, Team and culture</li>
+          <li>Values alignment, Competitive pay, Location, Perks (comp program, yoga classes, extracurriculars, spa), Community with other staff, Need an income to live</li>
+          <li>Location, Seasonal opportunity, Perks (comp program, yoga classes, extracurriculars), Community with other staff, Food</li>
+          <li>Seasonal opportunity</li>
+          <li>Competitive pay, Location, Seasonal opportunity, Community with other staff, Need an income to live</li>
+          <li>Location, Community with other staff, Need an income to live</li>
+          <li>Values alignment, Need an income to live</li>
+        </ol>
+      </div>
+      <div class="hh-app-q">
+        <div class="hh-app-q-title">What types of training opportunities would you like to see next year?</div>
+        <ol class="hh-app-list">
+          <li>Mental Health First Aid, Conflict Engagement/Resolution, De-escalation</li>
+          <li>Antiracism, Communication, Mental Health First Aid, Conflict Engagement/Resolution, Leadership Skills, De-escalation</li>
+          <li>Communication, Mental Health First Aid, Conflict Engagement/Resolution, De-escalation</li>
+          <li>Leadership Skills</li>
+          <li>Mental Health First Aid, Conflict Engagement/Resolution, Leadership Skills, De-escalation</li>
+          <li>Communication, Mental Health First Aid, Conflict Engagement/Resolution, Leadership Skills, Anything related to maintenance</li>
+          <li>I will not be coming back next season, but Mental Health First Aid to those who need it would have been my first choice.</li>
+          <li>Mental Health First Aid, Conflict Engagement/Resolution, I.T. Skills, Leadership Skills, De-escalation</li>
+          <li>Communication</li>
+          <li>Communication</li>
+          <li>Mental Health First Aid</li>
+          <li>Conflict Engagement/Resolution, Leadership Skills</li>
+          <li>Kitchen Skills Training for Kitchen Staff Before Season Start</li>
+          <li>Antiracism, Communication, Mental Health First Aid, Conflict Engagement/Resolution, Leadership Skills, De-escalation</li>
+          <li>I.T. Skills</li>
+          <li>Communication, Mental Health First Aid, Conflict Engagement/Resolution, Leadership Skills, De-escalation, Expanding opportunities</li>
+          <li>Communication, Mental Health First Aid, Conflict Engagement/Resolution, De-escalation</li>
+          <li>Antiracism, Mental Health First Aid, Conflict Engagement/Resolution, Leadership Skills</li>
+          <li>Gender Diversity, Antiracism, Communication, Mental Health First Aid, Conflict Engagement/Resolution, I.T. Skills, Leadership Skills, De-escalation, All great options! I'm open to any and all</li>
+          <li>Gender Diversity, Antiracism, Communication, Mental Health First Aid, Conflict Engagement/Resolution, I.T. Skills, Leadership Skills, De-escalation</li>
+          <li>Gender Diversity, Antiracism, Communication, Mental Health First Aid, Conflict Engagement/Resolution, I.T. Skills, Leadership Skills, De-escalation</li>
+          <li>Mental Health First Aid, I.T. Skills</li>
+          <li>Communication, Conflict Engagement/Resolution</li>
+          <li>Mental Health First Aid</li>
+          <li>Communication</li>
+          <li>Gender Diversity, Antiracism, Communication, Mental Health First Aid, Conflict Engagement/Resolution, I.T. Skills, Leadership Skills, De-escalation</li>
+          <li>Communication</li>
+        </ol>
+      </div>
+      <div class="hh-app-q">
+        <div class="hh-app-q-title">What's a particularly rewarding and/or motivating part of working at Hollyhock for you?</div>
+        <ol class="hh-app-list">
+          <li>Coworkers and colleagues, Natural/remote setting</li>
+          <li>Coworkers and colleagues, Natural/remote setting</li>
+          <li>Professional Growth and Development, Natural/remote setting</li>
+          <li>Professional Growth and Development, Being part of Hollyhocks leadership education mission</li>
+          <li>Coworkers and colleagues, Gratitude from guests, Natural/remote setting, Hot tub!</li>
+          <li>Coworkers and colleagues, Professional Growth and Development, Natural/remote setting, Being part of Hollyhocks leadership education mission</li>
+          <li>Coworkers and colleagues, Natural/remote setting, Being part of Hollyhocks leadership education mission</li>
+          <li>Coworkers and colleagues</li>
+          <li>Coworkers and colleagues, Gratitude from guests</li>
+          <li>Coworkers and colleagues</li>
+          <li>Responses from guests</li>
+          <li>Natural/remote setting, Being part of Hollyhocks leadership education mission</li>
+          <li>Natural/remote setting</li>
+          <li>Coworkers and colleagues, Gratitude from guests, Natural/remote setting</li>
+          <li>Coworkers and colleagues, Professional Growth and Development, Natural/remote setting, Being part of Hollyhocks leadership education mission</li>
+          <li>Gratitude from guests, Professional Growth and Development</li>
+          <li>Coworkers and colleagues, Gratitude from guests, Natural/remote setting, Professional Growth and Development, Being part of Hollyhocks leadership education mission, It's one place I feel at peace in a chaotic and often angry world.</li>
+          <li>Coworkers and colleagues, Working within a team that is dedicated to upholding a high standard of staff experience, Working within a team that strives to offer quality work atmosphere and competitive wages for local Cortesians.</li>
+          <li>Coworkers and colleagues, Professional Growth and Development, Natural/remote setting, Being part of Hollyhocks leadership education mission</li>
+          <li>Coworkers and colleagues, Professional Growth and Development, Natural/remote setting, Being part of Hollyhocks leadership education mission</li>
+          <li>Coworkers and colleagues, Gratitude from guests, Professional Growth and Development, Natural/remote setting, Being part of Hollyhocks leadership education mission</li>
+          <li>Coworkers and colleagues, Natural/remote setting, Professional Growth and Development, Being part of Hollyhocks leadership education mission</li>
+          <li>Coworkers and colleagues, Natural/remote setting, Professional Growth and Development, Being part of Hollyhocks leadership education mission</li>
+          <li>Coworkers and colleagues, Natural/remote setting</li>
+          <li>Coworkers and colleagues</li>
+          <li>Coworkers and colleagues, Gratitude from guests, Professional Growth and Development, Natural/remote setting</li>
+          <li>Coworkers and colleagues, Natural/remote setting</li>
+          <li>Coworkers and colleagues</li>
+        </ol>
+      </div>
+      <div class="hh-app-q">
+        <div class="hh-app-q-title">What is a particularly challenging part of working at Hollyhock for you?</div>
+        <ol class="hh-app-list">
+          <li>Workload</li>
+          <li>Workload, Compensation and/or benefits, lack of health benefits (health spending account only goes so far), lack of operational leadership on campus (especially, but not exclusively, as it relates to interdepartmental communication)</li>
+          <li>Coworkers and colleagues</li>
+          <li>to be surrounded by so many different and always changing people all the time, but i like it though:)</li>
+          <li>Workload, Compensation and/or benefits</li>
+          <li>Workload, Insufficient training</li>
+          <li>Driving all the way from whaletown everyday</li>
+          <li>Insufficient training</li>
+          <li>Workload</li>
+          <li>Seeing colleagues burn out</li>
+          <li>Insufficient training, Stressed Manager</li>
+          <li>Workload</li>
+          <li>Compensation and/or benefits</li>
+          <li>Coworkers and colleagues, Insufficient training</li>
+          <li>Workload</li>
+          <li>Remote setting</li>
+          <li>Physically it would be a challenge to continue for years in the position I was in.</li>
+          <li>Workload, Insufficient training, Wage inequality between local staff and remote staff.</li>
+          <li>Workload, Compensation and/or benefits</li>
+          <li>Workload</li>
+          <li>Compensation and/or benefits</li>
+          <li>Compensation and/or benefits, Insufficient training</li>
+          <li>Remote setting, High energy, different people coming every week</li>
+          <li>scary spiders</li>
+          <li>Workload, Coworkers and colleagues, Compensation and/or benefits</li>
+          <li>Workload, Compensation and/or benefits, Insufficient training</li>
+          <li>Communication</li>
+        </ol>
+      </div>
+      <div class="hh-app-q">
+        <div class="hh-app-q-title">What is something Hollyhock, as an organisation, is doing well?</div>
+        <ol class="hh-app-list">
+          <li>Wage lift was awesome</li>
+          <li>Increased wages</li>
+          <li>Job elements are good. Laundry is done well, food is good, etc.</li>
+          <li>giving alot of trust to the guests, what creates a feeling of home</li>
+          <li>Deep care for employees and guests. Management really tries to uphold the mission statement of HH and they do a lovely job - The heart and soul of Hollyhock campus management is lovely. Wonderful people, spirit and intention.</li>
+          <li>Investing in staff experience</li>
+          <li>Strong work ethic and work ambiance setting</li>
+          <li>Generally providing guests with a positive and enriching experience.</li>
+          <li>Creating a positive work environment</li>
+          <li>Getting better at supporting onsite staff</li>
+          <li>Reaching out to Community and diversifying guests and staff</li>
+          <li>Always finding a solution fast and being caring.</li>
+          <li>great food</li>
+          <li>Better wages, trying to pay more attention to staff experience and staff needs</li>
+          <li>Delivering powerful experiences for guests</li>
+          <li>the food has been great this year</li>
+          <li>Carrying for others. Offering an enriched environment.</li>
+          <li>Working on improving campus staff experience. There has been a positive shift in valuing campus staff with wage increases and more onsite perks. This goes a long way and translates into a higher quality guest experience. Moving in this direction will hopefully increase staff retention and seasonal return staff.</li>
+          <li>Communicating more (ex: The Sun) about campus operations, programming really amazing presenters, caring for the staff experience as much as the participant experience.</li>
+          <li>Supportive work environment where people's unique qualities are celebrated and welcome (attracts great human beings), growth opportunities for staff and guests, so many perks, staff enrichment and connection opportunities are always warm and fun, staff retention: people come back year after year because it's a great company to work for, deepening relationships with indigenous groups and the land, gratitude practices, meaningful work, etc. I feel that Hollyhock is doing a lot of things well.</li>
+          <li>I think Hollyhock is doing well at trying to support a wide range of staff with a wide array of skills and needs.</li>
+          <li>Guest experience, team culture of helping and supporting each other</li>
+          <li>It promotes a safe and healthy work environment. It strives to maintain effective communication within the organization through various channels, for example "The Hollyhock Sun - News For You" which I enjoy reading every week. It cares for employees to express their concerns and suggestions, creating opportunities to express them. And of course, all the amazing perks we have!</li>
+          <li>We have such a great staff cohort and all of the perks are wonderful. The garden and the restaurant are such beautiful connecting places. The wage raise was also greatly appreciated this year. The mission to create a vibrant and healthy community at Hollyhock that extends out into the larger world is meaningful and inspiring. The land stewardship and teachings about this specific place we live are also deeply appreciated. (Bill's nature walks and bird walks...Brenda and Rose...more of these sorts of teachings please!). The offerings from elders are so important.</li>
+          <li>healthy yummy food</li>
+          <li>Acknowledging staff importance by raising wages.</li>
+          <li>Staff community</li>
+          <li>Hollyhock is an incredibly inclusive workplace, that puts employee welfare high on the agenda.</li>
+        </ol>
+      </div>
+      <div class="hh-app-q">
+        <div class="hh-app-q-title">What is something Hollyhock as an organisation could improve on?</div>
+        <ol class="hh-app-list">
+          <li>Collaborative decision making</li>
+          <li>When making changes I think it is essential that staff are consulted and actually listened to, no one person has all the information. Especially the staff who will have to carry out the work to implement the change or deal with the outcomes of the change.</li>
+          <li>Helping people understand one another. Many conflicts this year went unsatisfactorily unresolved, some were despicable.</li>
+          <li>i think it would be good if there would be at least one staff member around 24/7 when guests are in. so that whatever situation occurs, there is someone in person to speak to.</li>
+          <li>It seems like there is always budget concerns. It would take a big re-structuring, but I'm curious what could be done to support better wages for employees and also sustain the organization. The low wage was my only concern this season. Otherwise, I had a great season.</li>
+          <li>Long term planning</li>
+          <li>Communication between Supervisor/Manager/Department. General inspection of equipment and working procedures</li>
+          <li>Providing better support and training to staff.</li>
+          <li>Pay the bodyworkers reasonably</li>
+          <li>Wage ratio</li>
+          <li>Staff training in order to grow, individually, professionally and as a whole</li>
+          <li>Better training for new staff.</li>
+          <li>transparency, dealing with conflict</li>
+          <li>Focusing on practicality and realistic goals, Listening to department needs, and campus-life experience. Not hiring out of desperation, better background checks and more respectful and considerate decisions around staff housing.</li>
+          <li>Clarity and communication of our mission</li>
+          <li>email culture</li>
+          <li>It could be good to find out the strengths and interests of the employees to see if they might be able to contribute in better ways, even in a volunteer capacity alongside the jobs they've been hired for. I saw that many of the employees have skills that weren't utilized and could benefit Hollyhock. (could be fun for the employees who want to put on a teaching night so we can learn from each other, as I believe most people drawn to Hollyhock are life-long learners who have much to offer.)</li>
+          <li>Better quality and longer onboarding training. Update/creation of procedure manuals for each position. Complimentary meals while on shift or the option of staff meal plan.</li>
+          <li>Summer will always be a busy season but resources can feel delicate — as soon as someone is sick or unwell, it throws off the balance and mental states can decline quickly. When other departments have to pick up the work, it begins to add load and during the busy season, it's hard to actually use up the lieu time so we get into wellness debt. Once the season is over, the burnout is so real that the recovery time cuts into next year's planning, and cascades into already feeling "behind." I think ES has been making improvements over the years but I think our Core presenters could be even more streamlined with standard ES operating procedures, expectations, and prep.</li>
+          <li>I'm sure many folks would put "wage" here but I actually feel that we have the highest wages on this island. Instead, I feel that we could improve on interdepartmental systems and processes — and subsequently a little bit of that is communication. That said, I think we're already working on this.</li>
+          <li>I think Hollyhock could improve on offering professional development that can help staff grow and develop their skills and strengths and expand their skills and professionally develop in new ways.</li>
+          <li>Hustle/urgency culture, overwork, new processes and systems to improve workflow, reduce number of meetings, encourage staff to take lieu time, block calendars, etc.</li>
+          <li>There's nothing I can think of right now.</li>
+          <li>I've noticed a growing emphasis on adopting certain American internship practices, which seem to prioritize candidates from privileged or elite educational backgrounds. This approach can feel more like a branding exercise than one grounded in our core values. I believe the organisation could explore more inclusive and locally grounded pathways for bringing in new talent — ones that focus on genuine alignment with our mission rather than prestige. I think it's worth reflecting on how to stay authentic and values-driven as we grow. But also to be clear here, I am very much appreciating Katia's presence on campus and even more so that she has moved here and is making Cortes her home and efforts to be part of this community. I am not anti-American but I do question this internship practice we are adapting.</li>
+          <li>keeping bugs out of the rooms</li>
+          <li>For persons in leadership positions to better understand the culture that goes on in each department — the challenges they face and what key players would wish to see insofar as change. Also, more staff housing opportunities. The problem with retaining employees who don't work well and aren't respectful to live with is that wholesome professionals will not want to come back if it means that they have to live with chaotic people. I think clear protocols need to be put into practice in order to assure the quick outflow of inadequate workers/roommates.</li>
+          <li>COMMUNICATION! Sooo much inefficiency, time and money wasted due to ineffective or non-communication between departments, siloing, or lost organizational knowledge when people leave as there's often little or no training manuals made before their departure. There's no wage transparency into SLT and upper management wages. Also PLEASE improve sanitation and cleanliness standards in the kitchen. Many guests will taste things with the general serving spoons and put back into the communal dish. Some signs might help and perhaps having a fresh plate rule for getting seconds.</li>
+          <li>Cross team communication could be improved, as well as direct communication of what is needed and expected. This could be by making the all team weekly meeting a time to share big current projects and deadlines, and provide an opportunity for teams to identify areas of crossover or head off potential issues before they arise.</li>
+        </ol>
+      </div>
+      <div class="hh-app-q">
+        <div class="hh-app-q-title">What does "organizational transparency" in a workplace mean for you?</div>
+        <ol class="hh-app-list">
+          <li>It means that decisions are made with appropriate levels of consultation, and that people impacted are informed in a timely manner and also in an effective way so they actually receive the information that allows them to understand how their leadership operates</li>
+          <li>that the roles, tasks and responsibilities are clear</li>
+          <li>openness and honesty with the management details and structure of the organization.</li>
+          <li>Staff understand what the organisation is doing and why and feel confident to support organisational decision making and direction in the community</li>
+          <li>When something should be confidential it should stay confidential so people don't start gossiping.</li>
+          <li>To have senior managers and executives be completely open and honest with staff members.</li>
+          <li>Clear and timely communication around decisions that affect onsite staff and the campus.</li>
+          <li>Sharing facts rather than smooth talking</li>
+          <li>Clear communication</li>
+          <li>The ability to communicate openly when things are going well, but also in challenging situations — things that are unfortunately lacking, because management is operating out of fear and scarcity, and this vibration trickles down to everyone</li>
+          <li>Honest and open communication, room for questions and feedback.</li>
+          <li>Understanding how and why decisions are made</li>
+          <li>Things are open where possible</li>
+          <li>Hmm. I'd imagine just being clear on the goals of the organization and of the roles within it.</li>
+          <li>Wage transparency. Equal opportunity to new and open positions both internally and publicly. Equal opportunity to perks. Managerial decisions, policy changes, budget allocations shared within the organization and accessible to all.</li>
+          <li>Being able to openly dialogue challenging or vulnerable topics without fear of being penalized or dismissed.</li>
+          <li>The staff are brought into the loop when it comes to change, planning, and direction. It sounds strange, but some transparency is good, too much can cause concern or be ineffective.</li>
+          <li>Organizational transparency in a workplace, for me, means that the SLT and Board are willing to communicate openly with staff about strategic plans, organizational changes, goals, intentions, and changes to process or changes that impact the nature of the work we are doing. I think it also means that there is an open channel for feedback where staff can communicate without fear of being penalized. And that their privacy around such feedback is respected and protected.</li>
+          <li>When an organization is open and honest about the company's goals, mission, vision, strategy, financials, challenges, etc. with all partners, including staff — and where everyone is accountable for their actions, trust is built, and communication is prioritized</li>
+          <li>Openly sharing information with employees, such as decisions, processes and performance.</li>
+          <li>not sure</li>
+          <li>That everyone is on the level with how the organisation is doing, what it is claiming to stand for and what it intends to become.</li>
+          <li>SLT and upper management wage transparency for all staff. Remote and campus wage bands and how and why they differ. Transparency when making large decisions that will affect the whole organization and everyone's jobs.</li>
+          <li>To me, this means being open with the organization's aims, challenges, and plans.</li>
+        </ol>
+      </div>
+      <div class="hh-app-q">
+        <div class="hh-app-q-title">What is your favourite perk at Hollyhock?</div>
+        <ol class="hh-app-list">
+          <li>Complimentary program</li>
+          <li>Breakfast, and complimentary program second</li>
+          <li>Spa</li>
+          <li>Extra activities available for staff (e.g. yoga, presenter evenings)</li>
+          <li>Spa</li>
+          <li>Magic meals fridge</li>
+          <li>Would be nice if the kitchen was making more food to have lunch and dinner sometimes</li>
+          <li>Complimentary program</li>
+          <li>I can't pick one</li>
+          <li>Complimentary program</li>
+          <li>Complimentary program</li>
+          <li>Spa</li>
+          <li>Spa</li>
+          <li>Both breakfast and magic fridge</li>
+          <li>Breakfast</li>
+          <li>Driving down the hill on a sunny day</li>
+          <li>Complimentary program</li>
+          <li>Breakfast</li>
+          <li>Comp program AND having a place to stay at/near campus for remote staff, without having to pay out of pocket</li>
+          <li>Breakfast</li>
+          <li>As a remote worker I really appreciate being able to come to campus for the comp program, but also to receive a discount on accommodation and meals so that I can come and visit. I also really appreciate having access to accommodation that is not taking away from paying guests.</li>
+          <li>Spa</li>
+          <li>Breakfast</li>
+          <li>All! The food probably first but having access to presenter evenings is wonderful too.</li>
+          <li>Spa</li>
+          <li>Magic meals fridge</li>
+          <li>All of the above! But it would also be really helpful to have full health benefits!</li>
+          <li>Spa</li>
+        </ol>
+      </div>
+      <div class="hh-app-q">
+        <div class="hh-app-q-title">Which team-building activities would you be interested in participating in, if offered?</div>
+        <ol class="hh-app-list">
+          <li>Outdoor activities</li>
+          <li>Meetings, Outdoor activities, Games, Movie nights</li>
+          <li>Meetings, Outdoor activities</li>
+          <li>Intimate sharing circles, giving space to each person to speak and be heard — it can create a very deep feeling of connectedness and trust in a group, depending on how it's initiated.</li>
+          <li>Parties, Meetings, Outdoor activities, Movie nights</li>
+          <li>Parties, Meetings</li>
+          <li>Meetings, Outdoor activities</li>
+          <li>I will not be coming back next season, so this question is not relevant.</li>
+          <li>Parties</li>
+          <li>Movie nights</li>
+          <li>Outdoor activities</li>
+          <li>Outdoor activities</li>
+          <li>Parties, Outdoor activities</li>
+          <li>Outdoor activities</li>
+          <li>Meetings, Outdoor activities, Games — I'd be happy to take part in any. I love the learning nights. I'd also love to see what I suggested (learning from each other)</li>
+          <li>Parties, Outdoor activities, Games, Movie nights — activities that can include all staff without excluding those that are on shift when the staff activity is scheduled.</li>
+          <li>Parties, Meetings, Outdoor activities, Games, Movie nights</li>
+          <li>Parties, Outdoor activities</li>
+          <li>Parties, Meetings, Outdoor activities, Games, Movie nights</li>
+          <li>Outdoor activities, Games</li>
+          <li>Outdoor activities, Movie nights</li>
+          <li>Outdoor activities</li>
+          <li>Parties</li>
+          <li>Parties, Outdoor activities</li>
+          <li>Parties, Meetings, Outdoor activities, Games, Movie nights, professional development learnings, field trips etc.</li>
+          <li>More opportunities for offsite staff to connect</li>
+        </ol>
+      </div>
+
+</div>
+
+
+</body>
+</html>
