@@ -3,7 +3,7 @@
 
 import csv
 import re
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString, Tag
 
 # ── 1. LOAD SOURCE ────────────────────────────────────────────────────────────
 
@@ -16,19 +16,11 @@ soup = BeautifulSoup(html, 'html.parser')
 
 soup.find('title').string = 'Hollyhock End of Season Survey 2025 — Print Version'
 
-# ── 3. UPDATE INTRO BLURB ─────────────────────────────────────────────────────
+# ── 3. ADD DATALABELS PLUGIN ──────────────────────────────────────────────────
 
-# Replace the intro paragraph text (the long description div near the top)
-for div in soup.find_all('div', style=re.compile(r'font-size:15px.*color:#555')):
-    if 'interactive' in div.get_text() or 'hover' in div.get_text() or 'summarizes' in div.get_text():
-        div.string = (
-            'This document is the printable version of the 2025 end of season staff survey report. '
-            'It covers five sections: respondent profile, engagement and development, connectedness '
-            'and empowerment, open-ended responses, and a cross-question synthesis. All theme and '
-            'synthesis content is fully expanded. An appendix of custom and open-ended responses '
-            'follows the main report.'
-        )
-        break
+chart_script = soup.find('script', src=re.compile('chart', re.I))
+dl_tag = soup.new_tag('script', src='https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2')
+chart_script.insert_after(dl_tag)
 
 # ── 4. ADD PRINT CSS (append to existing <style>) ────────────────────────────
 
@@ -65,180 +57,246 @@ style.append("""
   .hh-section-title + .hh-row,
   .hh-section-title + .hh-cards-3,
   .hh-section-title + .hh-chart-wrap { page-break-before: avoid; }
+
+  /* Donut data table */
+  .pdf-donut-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; font-size: 12px; font-family: 'Montserrat', sans-serif; }
+  .pdf-donut-table td { padding: 3px 6px; color: #444; }
+  .pdf-donut-table td:last-child { text-align: right; font-weight: 600; color: #233C4D; }
+  .pdf-donut-swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: middle; }
 """)
 
 # ── 5. REMOVE DOWNLOAD PDF BUTTON ─────────────────────────────────────────────
 
 for btn in soup.find_all('button', string=re.compile('Download PDF', re.I)):
+    # Remove the button and its parent positioning div if it only contains the button
     parent = btn.parent
     btn.decompose()
-    if parent and 'position:absolute' in parent.get('style', ''):
+    if parent and parent.get('style', '').find('position:absolute') != -1:
         parent.decompose()
 
-# ── 6. REMOVE INTERACTIVE ONCLICK HANDLERS AND CHEVRONS ───────────────────────
+# ── 6. REMOVE CARD-TOGGLE ONCLICK (make headings non-interactive) ─────────────
 
 for el in soup.find_all(class_='hh-card-toggle'):
-    if el.get('onclick'):
-        del el['onclick']
+    del el['onclick']
+    # Remove the expand indicator span
     for exp in el.find_all(class_='hh-card-expand'):
         exp.decompose()
 
+# Remove synth header onclick
 for el in soup.find_all(class_='hh-synth-header'):
-    if el.get('onclick'):
-        del el['onclick']
-
+    del el['onclick']
 for el in soup.find_all(class_='hh-synth-chevron'):
     el.decompose()
 
+# Remove quotes toggle buttons
 for el in soup.find_all(class_='hh-quotes-toggle'):
     el.decompose()
 
-# ── 7. REMOVE OLD HIDDEN APPENDIX DIV ────────────────────────────────────────
+# ── 7. ADD DONUT DATA TABLES ──────────────────────────────────────────────────
 
-for div in soup.find_all('div', style=re.compile(r'display\s*:\s*none')):
-    div.decompose()
-
-# ── 8. UPDATE DONUT CHART LEGEND TEXT TO INCLUDE PERCENTAGES ─────────────────
-
-# The legends already exist in index.html after each canvas; update the label text
-donut_legend_labels = {
-    'tenureChart': [
-        '1 year or less (32.1%)',
-        '2–4 seasons (42.9%)',
-        '5–7 seasons (10.7%)',
-        '8+ seasons (14.3%)',
-    ],
-    'newChart': [
-        'Returning staff (67.9%)',
-        'New staff (32.1%)',
-    ],
+donut_data = {
+    'tenureChart': {
+        'rows': [
+            ('#233C4D', '1 year or less',  '32.1%', '(n=9)'),
+            ('#427C7D', '2–4 seasons',     '42.9%', '(n=12)'),
+            ('#D6AD60', '5–7 seasons',     '10.7%', '(n=3)'),
+            ('#CA5757', '8+ seasons',      '14.3%', '(n=4)'),
+        ]
+    },
+    'newChart': {
+        'rows': [
+            ('#233C4D', 'Returning staff', '67.9%', '(n=19)'),
+            ('#D6AD60', 'New staff',       '32.1%', '(n=9)'),
+        ]
+    },
 }
 
-for canvas_id, labels in donut_legend_labels.items():
+for canvas_id, info in donut_data.items():
     canvas = soup.find('canvas', id=canvas_id)
     if not canvas:
         continue
-    chart_wrap = canvas.find_parent(class_='hh-chart-wrap')
-    if not chart_wrap:
-        continue
-    legend = chart_wrap.find(class_='hh-legend')
-    if not legend:
-        continue
-    spans = legend.find_all('span', recursive=False)
-    for span, label in zip(spans, labels):
-        dot = span.find(class_='hh-dot')
-        # Clear span and rebuild with dot + new label text
-        span.clear()
-        span.append(dot)
-        span.append(label)
+    # Build table HTML
+    rows_html = ''
+    for color, label, pct, count in info['rows']:
+        rows_html += (
+            f'<tr><td><span class="pdf-donut-swatch" style="background:{color}"></span>{label} {count}</td>'
+            f'<td>{pct}</td></tr>'
+        )
+    table_html = f'<table class="pdf-donut-table">{rows_html}</table>'
+    table_tag = BeautifulSoup(table_html, 'html.parser')
+    # Insert after the canvas wrapper div
+    wrapper = canvas.parent
+    wrapper.insert_after(table_tag)
 
-# ── 9. REMOVE APPENDIX PLACEHOLDER COMMENT ───────────────────────────────────
+# ── 8. INJECT JS: REGISTER DATALABELS + CONFIGURE CHARTS ─────────────────────
 
+datalabel_js = """
+// ── PDF: register datalabels and configure all charts ──
+Chart.register(ChartDataLabels);
+Chart.defaults.set('plugins.datalabels', { display: false });  // off by default
+
+// After page loads, patch each chart to show values
+window.addEventListener('load', () => {
+  Chart.instances && Object.values(Chart.instances).forEach(chart => {
+    const type = chart.config.type;
+    const isHorizontalBar = chart.options.indexAxis === 'y';
+    const isVerticalBar   = type === 'bar' && !isHorizontalBar;
+    const isDoughnut      = type === 'doughnut';
+
+    if (isHorizontalBar) {
+      chart.options.plugins.datalabels = {
+        display: true,
+        anchor: 'end',
+        align: 'right',
+        formatter: (v) => v > 0 ? v.toFixed(1) + '%' : '',
+        font: { size: 9, weight: '600', family: 'Montserrat' },
+        color: '#444',
+        clamp: true,
+        offset: 2,
+      };
+      chart.update('none');
+    } else if (isVerticalBar) {
+      chart.options.plugins.datalabels = {
+        display: true,
+        anchor: 'end',
+        align: 'top',
+        formatter: (v) => v > 0 ? v.toFixed(1) + '%' : '',
+        font: { size: 9, weight: '600', family: 'Montserrat' },
+        color: '#444',
+        clamp: true,
+        offset: 2,
+      };
+      chart.update('none');
+    }
+  });
+});
+"""
+
+# Find the closing </script> of the main script block and append before it
+main_script = soup.find_all('script')[-1]  # last script block is the chart JS
+main_script.append(datalabel_js)
+
+# ── 9. REMOVE APPENDIX COMMENT AND OLD HIDDEN APPENDIX ───────────────────────
+
+# Remove the placeholder comment
 for node in soup.find_all(string=re.compile('APPENDIX: moved')):
     node.extract()
 
+# Remove the old hidden appendix div (display:none containing old appendix content)
+for div in soup.find_all('div', style=re.compile(r'display\s*:\s*none')):
+    div.decompose()
+
 # ── 10. BUILD APPENDIX FROM CSV ───────────────────────────────────────────────
 
-# Strings to strip from multi-select responses (standard checkbox options)
-STANDARD_STRINGS = sorted([
-    "I will not be coming back next season, but Mental Health First Aid to those who need it would have been my first choic.",
-    "Being part of Hollyhocks leadership education mission",
-    "Extra activities available for staff Ex: Yoga, presenter evening etc.",
-    "Perks (comp program, yoga classes, extracurriculars, spa)",
-    "Perks (comp program, yoga classes, extracurriculars)",
-    "Professional Growth and Development",
-    "Conflict Engagement/Resolution",
-    "Compensation and/or benefits",
-    "Community with other staff",
-    "Natural/remote setting",
-    "Coworkers and colleagues",
-    "Mental Health First Aid",
-    "Gratitude from guests",
-    "Seasonal opportunity",
-    "Need an income to live",
-    "Leadership Skills",
-    "Competitive pay",
-    "Values alignment",
-    "Insufficient training",
-    "Outdoor activities",
-    "Gender Diversity",
-    "Remote setting",
-    "De-escalation",
-    "Movie nights",
-    "Communication",
-    "Antiracism",
-    "I.T. Skills",
-    "Location",
-    "Workload",
-    "Meetings",
-    "Parties",
-    "Games",
-], key=len, reverse=True)
+STANDARD_OPTIONS = {
+    'join_return': {
+        'Competitive pay', 'Seasonal opportunity',
+        'Perks (comp program, yoga classes, extracurriculars)',
+        'Perks (comp program, yoga classes, extracurriculars, spa)',
+        'Need an income to live', 'Need income',
+        'Community with other staff', 'Staff community',
+        'Values alignment', 'Location',
+    },
+    'training': {
+        'Gender Diversity', 'Antiracism', 'I.T. Skills', 'De-escalation',
+        'Leadership Skills', 'Communication', 'Conflict Engagement/Resolution',
+        'Mental Health First Aid',
+    },
+    'rewarding': {
+        'Coworkers and colleagues', 'Natural/remote setting',
+        'Professional Growth and Development',
+        'Being part of Hollyhocks leadership education mission',
+        'Gratitude from guests',
+    },
+    'challenging': {
+        'Workload', 'Compensation and/or benefits', 'Insufficient training',
+        'Coworkers and colleagues', 'Remote setting',
+    },
+    'perk': {
+        'Spa', 'Complimentary program', 'Breakfast', 'Magic meals fridge',
+        'Activities',
+    },
+    'team': {
+        'Outdoor activities', 'Parties', 'Meetings', 'Movie nights', 'Games',
+    },
+}
 
+def parse_custom(cell_value, standard_set):
+    """Return write-in responses that are not in the standard option set."""
+    if not cell_value or not cell_value.strip():
+        return []
+    parts = [p.strip() for p in cell_value.split(',')]
+    custom = []
+    buf = ''
+    for part in parts:
+        candidate = (buf + ', ' + part).strip(', ') if buf else part
+        # Check if candidate or any standard option starts with it
+        matched = any(
+            s.lower() == candidate.lower() or
+            s.lower().startswith(candidate.lower() + ',')
+            for s in standard_set
+        )
+        in_standard = any(s.lower() == candidate.lower() for s in standard_set)
+        partial_match = any(
+            s.lower().startswith(candidate.lower())
+            for s in standard_set
+        )
+        if in_standard:
+            buf = ''
+        elif partial_match:
+            buf = candidate
+        else:
+            # Not a standard option — it's custom
+            if buf:
+                custom.append(buf)
+            buf = ''
+            # Check if this part alone is standard
+            if any(s.lower() == part.lower() for s in standard_set):
+                pass
+            else:
+                buf = part
+    if buf:
+        custom.append(buf)
+    return [c for c in custom if len(c) > 2]
 
-def strip_standard(text):
-    """Remove standard checkbox options (as comma-delimited items) from response text.
-    Only removes a string when it appears as a standalone CSV item, not mid-sentence."""
-    result = text
-    for s in STANDARD_STRINGS:
-        escaped = re.escape(s)
-        # Remove when at the very start, followed by comma or end-of-string
-        result = re.sub(r'^' + escaped + r'\s*(?:,\s*|$)', '', result, flags=re.IGNORECASE)
-        # Remove when preceded by a comma (mid-list or at end)
-        result = re.sub(r',\s*' + escaped + r'\s*(?=,|$)', '', result, flags=re.IGNORECASE)
-    # Clean up leftover commas and whitespace
-    result = result.strip().strip(',').strip()
-    result = ' '.join(result.split())
-    return result
-
+def has_custom(cell_value, standard_set):
+    """Return True if cell contains text beyond the standard option set."""
+    if not cell_value or not cell_value.strip():
+        return False
+    remaining = cell_value
+    for opt in sorted(standard_set, key=len, reverse=True):
+        remaining = re.sub(re.escape(opt), '', remaining, flags=re.IGNORECASE)
+    # If meaningful text remains after removing all standard options, it has custom content
+    cleaned = re.sub(r'[,\s]+', '', remaining)
+    return len(cleaned) > 3
 
 with open('End of Season Survey 2025 (Responses) - Form Responses 1.csv', encoding='utf-8') as f:
     reader = csv.DictReader(f)
     rows = list(reader)
 
+# Column name fragments (partial match)
 COL = {}
-for h in rows[0].keys():
-    if 'Why did you join' in h:              COL['join_new']      = h
-    if 'returned to' in h:                   COL['join_ret']      = h
-    if 'training' in h and '(new)' in h:     COL['train_new']     = h
-    if 'training' in h and '(new)' not in h and 'Why' not in h:
-                                             COL['train_ret']     = h
-    if 'rewarding' in h and '(new)' in h:    COL['reward_new']    = h
-    if 'rewarding' in h and '(new)' not in h: COL['reward_ret']   = h
-    if 'challenging' in h and '(new)' in h:  COL['challenge_new'] = h
+headers_list = list(rows[0].keys())
+for h in headers_list:
+    if 'Why did you join' in h:         COL['join_new']      = h
+    if 'returned to' in h:              COL['join_ret']      = h
+    if 'training' in h and '(new)' in h: COL['train_new']   = h
+    if 'training' in h and '(new)' not in h and 'Why' not in h: COL['train_ret'] = h
+    if 'rewarding' in h and '(new)' in h: COL['reward_new'] = h
+    if 'rewarding' in h and '(new)' not in h: COL['reward_ret'] = h
+    if 'challenging' in h and '(new)' in h: COL['challenge_new'] = h
     if 'challenging' in h and '(new)' not in h: COL['challenge_ret'] = h
-    if 'doing well' in h and '(new)' in h:   COL['well_new']      = h
-    if 'doing well' in h and '(new)' not in h: COL['well_ret']    = h
-    if 'improve on' in h and '(new)' in h:   COL['improve_new']   = h
+    if 'doing well' in h and '(new)' in h: COL['well_new']  = h
+    if 'doing well' in h and '(new)' not in h: COL['well_ret'] = h
+    if 'improve on' in h and '(new)' in h: COL['improve_new'] = h
     if 'improve on' in h and '(new)' not in h: COL['improve_ret'] = h
-    if 'transparency' in h.lower() and 'mean' in h and '(new)' in h:
-                                             COL['transp_new']    = h
-    if 'transparency' in h.lower() and 'mean' in h and '(new)' not in h:
-                                             COL['transp_ret']    = h
-    if 'favourite perk' in h:               COL['perk']          = h
-    if 'team-building' in h:                COL['team']          = h
+    if 'transparency' in h.lower() and 'mean' in h and '(new)' in h: COL['transp_new'] = h
+    if 'transparency' in h.lower() and 'mean' in h and '(new)' not in h: COL['transp_ret'] = h
+    if 'favourite perk' in h:           COL['perk']          = h
+    if 'team-building' in h:            COL['team']          = h
 
-
-def collect_custom(col_new, col_ret=''):
-    """Collect cleaned custom write-in text from multi-select questions."""
-    seen = set()
-    results = []
-    for r in rows:
-        for col in [col_new, col_ret]:
-            if not col:
-                continue
-            val = r.get(col, '').strip()
-            if not val:
-                continue
-            cleaned = strip_standard(val)
-            if len(cleaned) > 3 and cleaned not in seen:
-                seen.add(cleaned)
-                results.append(cleaned)
-    return results
-
-
-def collect_open(col_new, col_ret=''):
-    """Collect all non-empty open-ended responses."""
+# Collect all responses for open-ended questions
+def collect_open(col_new, col_ret):
     out = []
     for r in rows:
         v = r.get(col_new, '').strip() or r.get(col_ret, '').strip()
@@ -246,22 +304,35 @@ def collect_open(col_new, col_ret=''):
             out.append(v)
     return out
 
+def collect_single(col):
+    return [r.get(col, '').strip() for r in rows if r.get(col, '').strip()]
 
-join_custom      = collect_custom(COL.get('join_new', ''), COL.get('join_ret', ''))
-train_custom     = collect_custom(COL.get('train_new', ''), COL.get('train_ret', ''))
-reward_custom    = collect_custom(COL.get('reward_new', ''), COL.get('reward_ret', ''))
-challenge_custom = collect_custom(COL.get('challenge_new', ''), COL.get('challenge_ret', ''))
-perk_custom      = collect_custom(COL.get('perk', ''))
-team_custom      = collect_custom(COL.get('team', ''))
+# Collect full raw responses that contain at least one custom (write-in) value
+def collect_custom(col_new, col_ret, std_key):
+    std = STANDARD_OPTIONS[std_key]
+    seen = set()
+    results = []
+    for r in rows:
+        for col in [col_new, col_ret]:
+            val = r.get(col, '').strip()
+            if val and has_custom(val, std) and val not in seen:
+                seen.add(val)
+                results.append(val)
+    return results
 
-well_all    = collect_open(COL.get('well_new', ''), COL.get('well_ret', ''))
-improve_all = collect_open(COL.get('improve_new', ''), COL.get('improve_ret', ''))
-transp_all  = collect_open(COL.get('transp_new', ''), COL.get('transp_ret', ''))
+join_custom      = collect_custom(COL.get('join_new',''), COL.get('join_ret',''), 'join_return')
+train_custom     = collect_custom(COL.get('train_new',''), COL.get('train_ret',''), 'training')
+reward_custom    = collect_custom(COL.get('reward_new',''), COL.get('reward_ret',''), 'rewarding')
+challenge_custom = collect_custom(COL.get('challenge_new',''), COL.get('challenge_ret',''), 'challenging')
+perk_custom      = collect_custom(COL.get('perk',''), '', 'perk')
+team_custom      = collect_custom(COL.get('team',''), '', 'team')
 
+well_all    = collect_open(COL.get('well_new',''), COL.get('well_ret',''))
+improve_all = collect_open(COL.get('improve_new',''), COL.get('improve_ret',''))
+transp_all  = collect_open(COL.get('transp_new',''), COL.get('transp_ret',''))
 
 def li_list(items):
     return ''.join(f'<li>{item}</li>' for item in items if item)
-
 
 def appendix_section(title, items):
     if not items:
@@ -271,7 +342,6 @@ def appendix_section(title, items):
       <div class="hh-app-q-title">{title}</div>
       <ul class="hh-app-list">{li_list(items)}</ul>
     </div>'''
-
 
 appendix_html = f'''
 <hr class="hh-divider">
@@ -296,6 +366,8 @@ appendix_html = f'''
 '''
 
 appendix_tag = BeautifulSoup(appendix_html, 'html.parser')
+
+# Find the hh-wrap div and append the appendix before its closing tag
 wrap = soup.find('div', class_='hh-wrap')
 wrap.append(appendix_tag)
 
