@@ -120,36 +120,6 @@
 <body>
 <div class="page">
 
-  <!-- COVER PAGE -->
-  <div class="cover-page">
-    <div class="cover-logo-area">
-      <div class="cover-eyebrow">Hollyhock · Internal</div>
-      <div class="cover-accent-bar"></div>
-      <div class="cover-title">End of Season<br>Staff Survey 2025</div>
-      <div class="cover-subtitle">Annual staff feedback report — Hollyhock Leadership Centre</div>
-      <hr class="cover-rule">
-      <div class="cover-meta-grid">
-        <div>
-          <div class="cover-meta-label">Respondents</div>
-          <div class="cover-meta-val">28 staff</div>
-        </div>
-        <div>
-          <div class="cover-meta-label">Survey period</div>
-          <div class="cover-meta-val">End of season 2025</div>
-        </div>
-        <div>
-          <div class="cover-meta-label">Distribution</div>
-          <div class="cover-meta-val">Internal only</div>
-        </div>
-      </div>
-      <div class="cover-description">This report covers five sections: respondent profile, engagement and development, connectedness and empowerment, open-ended responses, and a cross-question synthesis. Theme and synthesis content is fully expanded. An appendix of all custom and open-ended responses follows the main report.</div>
-    </div>
-    <div class="cover-footer">
-      <div class="cover-footer-left">Hollyhock Leadership Centre · Cortes Island, BC</div>
-      <div class="cover-footer-right">Prepared April 2025 · Not for external distribution</div>
-    </div>
-  </div>
-
   <!-- Print button -->
   <div class="print-btn-wrap">
     <button onclick="window.print()" style="background:#CA5757;color:#fff;border:none;border-radius:8px;padding:0.45rem 1.1rem;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;">Save as PDF</button>
@@ -193,8 +163,7 @@
   <hr class="divider">
 
   <!-- SECTION 1: RESPONDENT PROFILE -->
-  <div class="section-num">01 — Respondent Profile</div>
-  <div class="section-title">Respondent Profile</div>
+  <div class="section-title" style="font-size:15px;">Respondent Profile</div>
 
   <div class="row2">
     <div class="chart-box">
@@ -229,8 +198,7 @@
   <hr class="divider">
 
   <!-- SECTION 2: ENGAGEMENT & DEVELOPMENT -->
-  <div class="section-num">02 — Engagement &amp; Development</div>
-  <div class="section-title">Engagement &amp; Development</div>
+  <div class="section-title" style="font-size:15px;">Engagement &amp; Development</div>
 
   <div class="row2">
     <div class="chart-box">
@@ -241,6 +209,14 @@
         <span><span class="dot" style="background:#233C4D"></span>Returning (n=19)</span>
       </div>
       <div style="position:relative;height:190px;"><canvas id="joinChart"></canvas></div>
+      <div class="theme-box" style="margin-top:0.75rem;">
+        <div class="theme-label">Staff themes</div>
+        <div class="theme-text">Love of the place and its natural setting, sense of community and culture, and food were the most common themes in written responses.</div>
+      </div>
+      <div class="callout" style="margin-top:0.5rem;">
+        <div class="callout-label">Context note</div>
+        <div class="callout-text">New and returning staff were asked different but thematically similar versions of this question: "Why did you join?" vs. "Why have you returned or stayed?" The options were identical.</div>
+      </div>
     </div>
     <div class="chart-box">
       <div class="chart-title">What types of training opportunities would you like to see next year?</div>
@@ -250,6 +226,14 @@
         <span><span class="dot" style="background:#CA5757"></span>Year-round (n=9)</span>
       </div>
       <div style="position:relative;height:190px;"><canvas id="trainingChart"></canvas></div>
+      <div class="theme-box" style="margin-top:0.75rem;">
+        <div class="theme-label">Staff themes</div>
+        <div class="theme-text">Specific written responses included requests for kitchen and maintenance skills training before the season begins.</div>
+      </div>
+      <div class="callout" style="margin-top:0.5rem;">
+        <div class="callout-label">Context note</div>
+        <div class="callout-text">The high demand for Mental Health First Aid training is likely influenced by events that occurred during the season. This may not reflect a standing baseline level of interest.</div>
+      </div>
     </div>
   </div>
 
@@ -274,21 +258,33 @@
         <div style="position:relative;height:160px;"><canvas id="challengeGroupChart"></canvas></div>
       </div>
     </div>
+  </div>
+
+  <div class="chart-box" style="margin-bottom:1rem;">
+    <div class="chart-title">What's rewarding, by tenure group?</div>
+    <div class="chart-sub">Multi-select — % of respondents in each tenure group</div>
+    <div class="legend">
+      <span><span class="dot" style="background:#D6AD60"></span>1 season (n=9)</span>
+      <span><span class="dot" style="background:#427C7D"></span>2–4 seasons (n=12)</span>
+      <span><span class="dot" style="background:#233C4D"></span>5–7 seasons (n=3)</span>
+      <span><span class="dot" style="background:#95bc67"></span>8+ seasons (n=4)</span>
+    </div>
+    <div style="position:relative;height:200px;"><canvas id="rewardTenureChart"></canvas></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:0.75rem;">
       <div class="theme-box">
         <div class="theme-label">Rewarding: staff themes</div>
-        <div class="theme-text">Open responses highlighted the <strong>sense of peace and belonging</strong> the natural setting provides and <strong>pride in the team's commitment</strong> to quality and staff experience.</div>
+        <div class="theme-text">Written responses echoed the pre-defined options, with staff highlighting the <strong>sense of peace and belonging</strong> the natural setting provides. Several mentioned <strong>pride in the team's commitment</strong> to quality, and named the overall staff experience as a core motivating force.</div>
       </div>
       <div class="theme-box">
         <div class="theme-label">Challenging: staff themes</div>
-        <div class="theme-text">Open responses highlighted <strong>health benefits gaps</strong>, <strong>communication and operational leadership</strong> concerns, and the <strong>physical demands</strong> of some roles. Some staff noted concern about witnessing colleagues burn out.</div>
+        <div class="theme-text">Written responses highlighted <strong>health benefits gaps</strong>, <strong>communication and operational leadership</strong> concerns, and the <strong>physical demands</strong> of some roles. Some staff noted concern about witnessing colleagues burn out.</div>
       </div>
       <div class="callout" style="grid-column:1/-1;">
         <div class="callout-label">Key insights</div>
         <div class="callout-text">
-          <strong>Coworkers are the universal motivator:</strong> Selected by 89% of new and 74% of returning staff, the most stable signal across all groups.<br><br>
-          <strong>Mission resonates most with new staff and fades with tenure:</strong> 56% of first-season staff cite the leadership education mission, dropping to 25% among 8+ season staff.<br><br>
-          <strong>Workload accumulates:</strong> Only 25% of new staff flag workload as a challenge, compared to 53% of returning staff — mirroring the burnout concerns in open responses.
+          <strong>Coworkers are the primary motivator:</strong> Selected by 89% of new and 74% of returning staff, the most consistent finding across all groups and tenure lengths.<br><br>
+          <strong>Mission resonates most with new staff and fades with tenure:</strong> 56% of first-season staff cite the leadership education mission as motivating, dropping to 25% among 8+ season staff. Long-tenured staff may benefit from active re-engagement around organizational purpose.<br><br>
+          <strong>Workload accumulates:</strong> Only 25% of new staff flag workload as a challenge, compared to 53% of returning staff. This gap is consistent with burnout concerns in written responses and the empowerment patterns seen in the connectedness data.
         </div>
       </div>
     </div>
@@ -299,11 +295,19 @@
       <div class="chart-title">Which team-building activities would you be interested in?</div>
       <div class="chart-sub">Multi-select — % of respondents</div>
       <div style="position:relative;height:160px;"><canvas id="teamChart"></canvas></div>
+      <div class="theme-box" style="margin-top:0.75rem;">
+        <div class="theme-label">Staff themes</div>
+        <div class="theme-text"><strong>Connection and learning</strong> were the most common themes in written responses. Staff want opportunities to share with and hear from each other, including <strong>intimate circles and learning nights</strong>. Remote and shift workers raised a consistent concern that <strong>activities are often scheduled in ways that exclude them</strong>. Both groups asked for more structured opportunities to connect with the broader team.</div>
+      </div>
     </div>
     <div class="chart-box">
       <div class="chart-title">What is your favourite perk at Hollyhock?</div>
       <div class="chart-sub">Multiple choice + open response — % of respondents</div>
       <div style="position:relative;height:160px;"><canvas id="perkChart"></canvas></div>
+      <div class="theme-box" style="margin-top:0.75rem;">
+        <div class="theme-label">Staff themes</div>
+        <div class="theme-text">Several staff said they couldn't choose just one perk, reflecting <strong>broad appreciation across the board</strong>. <strong>Food</strong> in particular came up repeatedly. Remote staff highlighted <strong>accommodation access and Comp Program</strong> as particularly meaningful. One staff member noted that <strong>health benefits would be a welcome addition</strong> to the package.</div>
+      </div>
     </div>
   </div>
 
@@ -317,11 +321,25 @@
         <span><span class="dot" style="background:#D6AD60"></span>Stayed the same (n=6)</span>
         <span><span class="dot" style="background:#CA5757"></span>Declined (n=3)</span>
       </div>
+      <div class="data-note" style="margin-top:0.75rem;">
+        <div class="data-note-label">Data notes</div>
+        <div class="data-note-text"><strong>Returning staff only:</strong> This question was only asked of returning staff (n=19). New staff responses are excluded as they have no prior year to compare against.<br><br><strong>Year-over-year comparison:</strong> In 2024, 53% of returning staff reported improvement, 31% no change, and 16% a decline, suggesting a modest softening in perceived transparency gains this year.</div>
+      </div>
     </div>
     <div class="chart-box">
       <div class="chart-title">Did you utilize "The Burrow"?</div>
       <div class="chart-sub">All respondents — % of responses</div>
       <div style="position:relative;height:140px;"><canvas id="burrowChart"></canvas></div>
+      <div class="legend" style="margin-top:8px;">
+        <span><span class="dot" style="background:#233C4D"></span>Yes (n=13)</span>
+        <span><span class="dot" style="background:#427C7D"></span>No (n=13)</span>
+        <span><span class="dot" style="background:#D6AD60"></span>Turn it back (n=1)</span>
+        <span><span class="dot" style="background:#CA5757"></span>What is it? (n=1)</span>
+      </div>
+      <div class="data-note" style="margin-top:0.75rem;">
+        <div class="data-note-label">Data notes</div>
+        <div class="data-note-text"><strong>Single-response options:</strong> "Turn it back into a kids room" and "What is The Burrow?" each represent one respondent and should not be interpreted as trends.<br><br><strong>Even split:</strong> Yes and No are exactly tied (13 each). With only 28 total respondents, a difference of one person would shift the result. Treat this as rough parity rather than a meaningful distinction.</div>
+      </div>
     </div>
   </div>
 
@@ -781,6 +799,11 @@ const stackedBarOpts = (max) => ({
   plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ' + ctx.parsed.x.toFixed(1) + '%' } } },
   scales: { x: { stacked: true, grid: { color: '#eee' }, ticks: { callback: v => v+'%', font: { size: 9 }, color: '#888' }, max }, y: { stacked: true, grid: { display: false }, ticks: { font: { size: 9 }, color: '#444' } } }
 });
+const groupedBarOpts = (max) => ({
+  responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+  plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ' + ctx.parsed.x.toFixed(1) + '%' } } },
+  scales: { x: { grid: { color: '#eee' }, ticks: { callback: v => v+'%', font: { size: 9 }, color: '#888' }, max }, y: { grid: { display: false }, ticks: { font: { size: 9 }, color: '#444' } } }
+});
 
 // --- Join/return ---
 new Chart(document.getElementById('joinChart'), {
@@ -836,6 +859,20 @@ new Chart(document.getElementById('challengeGroupChart'), {
     ]
   },
   options: stackedBarOpts(50)
+});
+
+new Chart(document.getElementById('rewardTenureChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Coworkers & colleagues','Natural / remote setting','Mission','Professional growth','Gratitude from guests'],
+    datasets: [
+      { label: '1 season',    data: [88.9,55.6,55.6,44.4,22.2], backgroundColor: '#D6AD60', borderRadius: 4, borderSkipped: false },
+      { label: '2–4 seasons', data: [75.0,75.0,33.3,50.0,41.7], backgroundColor: '#427C7D', borderRadius: 4, borderSkipped: false },
+      { label: '5–7 seasons', data: [66.7,100.0,33.3,33.3,0],   backgroundColor: '#233C4D', borderRadius: 4, borderSkipped: false },
+      { label: '8+ seasons',  data: [75.0,50.0,25.0,25.0,0],    backgroundColor: '#95bc67', borderRadius: 4, borderSkipped: false }
+    ]
+  },
+  options: groupedBarOpts(110)
 });
 
 // --- Team & Perk ---
