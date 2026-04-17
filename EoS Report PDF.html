@@ -346,12 +346,46 @@
   <hr class="divider">
 
   <!-- SECTION 3: CONNECTEDNESS & EMPOWERMENT -->
-  <div class="section-num" style="page-break-before: always;">03 — Connectedness &amp; Empowerment</div>
-  <div class="section-title">Connectedness &amp; Empowerment</div>
+  <div class="section-title" style="font-size:15px;page-break-before:always;">Connectedness &amp; Empowerment</div>
+
+  <div class="row2" style="margin-bottom:1rem;">
+    <div class="card">
+      <div class="card-label">Connectedness question</div>
+      <div style="font-size:10.5px;color:#233C4D;margin-top:4px;line-height:1.55;">On a scale of 1 to 5, how connected do you feel with your coworkers? 1 being not at all connected, 5 being very connected.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Empowerment question</div>
+      <div style="font-size:10.5px;color:#233C4D;margin-top:4px;line-height:1.55;">On a scale from 1 to 5, how empowered do you feel to share ideas or opinions that are different from your fellow team members?</div>
+    </div>
+  </div>
+
+  <div class="row3" style="margin-bottom:1rem;">
+    <div class="card"><div class="card-label">Connectedness mean</div><div class="card-val">3.79</div><div class="card-sub">out of 5</div></div>
+    <div class="card"><div class="card-label">Empowerment mean</div><div class="card-val">3.50</div><div class="card-sub">out of 5</div></div>
+    <div class="card"><div class="card-label">Correlation (r)</div><div class="card-val">0.50</div><div class="card-sub">p = 0.007 — significant</div></div>
+  </div>
 
   <div class="chart-box" style="margin-bottom:1rem;">
-    <div class="chart-title">Connectedness vs. empowerment</div>
-    <div class="chart-sub">Each point represents one staff member. Points are offset slightly to reduce overlap.</div>
+    <div class="chart-title">Mean scores by tenure group</div>
+    <div class="chart-sub">Average rating out of 5 — connectedness and empowerment compared across tenure lengths</div>
+    <div class="legend">
+      <span><span class="dot" style="background:#233C4D"></span>Connectedness</span>
+      <span><span class="dot" style="background:#427C7D"></span>Empowerment</span>
+    </div>
+    <div style="position:relative;height:160px;"><canvas id="tenureGrouped"></canvas></div>
+    <div class="theme-box" style="margin-top:0.75rem;">
+      <div class="theme-label">Insight</div>
+      <div class="theme-text"><strong>Connectedness is consistently higher than empowerment across all tenure groups.</strong> The 5–7 season group shows the widest gap (empowerment 3.33, connectedness 3.33), though this group has only 3 respondents. Staff with 8+ seasons report the highest connectedness (4.25) while newer staff report the highest empowerment mean (3.00). <strong>Long-serving staff (8+) report the highest connectedness but their empowerment (3.50) does not keep pace</strong>, sitting lower than the 2–4 season group (3.92).</div>
+    </div>
+    <div class="data-note" style="margin-top:0.5rem;">
+      <div class="data-note-label">Data note</div>
+      <div class="data-note-text">The 5–7 seasons group has only 3 respondents. Patterns in this group should not be interpreted as representative and are best treated as anecdotal.</div>
+    </div>
+  </div>
+
+  <div class="chart-box" style="margin-bottom:1rem;">
+    <div class="chart-title">Connectedness vs. Empowerment</div>
+    <div class="chart-sub">Each point represents one staff member. Points are offset slightly so that overlapping responses don't hide each other.</div>
     <div class="row2" style="margin-top:0.5rem;gap:1rem;">
       <div>
         <div style="font-size:10.5px;font-weight:600;margin-bottom:4px;">New vs. returning staff</div>
@@ -365,7 +399,7 @@
       <div>
         <div style="font-size:10.5px;font-weight:600;margin-bottom:4px;">On campus vs. remote staff</div>
         <div class="legend">
-          <span><span class="dot" style="background:rgba(66,124,125,0.85);border-radius:50%;"></span>Campus (n=23)</span>
+          <span><span class="dot" style="background:rgba(66,124,125,0.85);border-radius:50%;"></span>On campus (n=23)</span>
           <span><span class="dot" style="background:rgba(202,87,87,0.8);border-radius:50%;"></span>Remote (n=5)</span>
           <span><span class="dot" style="background:#CA5757;border-radius:0;"></span>Regression line</span>
         </div>
@@ -375,32 +409,21 @@
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:0.75rem;">
       <div class="theme-box">
         <div class="theme-label">The relationship</div>
-        <div class="theme-text">Staff who feel more socially connected also tend to feel more comfortable speaking up. Connectedness scores notably higher than empowerment with less variation across staff.</div>
+        <div class="theme-text">Staff who feel more socially connected also tend to feel more comfortable speaking up. Both scores sit above the midpoint, though connectedness scores higher than empowerment with less variation across staff. This gap appears to be driven more by tenure than by work location. New and returning staff show a larger spread on both measures than campus and remote staff do.</div>
       </div>
       <div class="theme-box">
         <div class="theme-label">Statistical significance</div>
-        <div class="theme-text">With 28 respondents, a p-value of 0.007 indicates the relationship is unlikely to be due to chance.</div>
+        <div class="theme-text">Even with only 28 respondents, a p-value of 0.007 indicates the relationship is unlikely to be due to chance.</div>
       </div>
       <div class="callout" style="grid-column:1/-1;">
         <div class="callout-label">Practical read</div>
         <div class="callout-text">
-          <strong>Overall:</strong> Fostering stronger team connection may help staff feel more psychologically safe to voice differing opinions. The moderate r (0.50) suggests other factors beyond social connection also influence empowerment. This pattern holds across every subgroup — connectedness consistently exceeds empowerment for new, returning, campus, and remote staff alike.<br><br>
-          <strong>New vs. returning:</strong> New staff score lower on both connectedness (3.44 vs. 3.95) and empowerment (3.00 vs. 3.74), with the empowerment gap being the larger of the two.<br><br>
-          <strong>On campus vs. remote:</strong> Remote staff score slightly lower on connectedness (3.60 vs. 3.83) yet slightly higher on empowerment (3.60 vs. 3.48). With only 5 remote respondents this should be interpreted cautiously.
+          <strong>Overall relationship:</strong> Fostering stronger team connection may help staff feel more psychologically safe to voice differing opinions. Social connection and empowerment are related, though one does not fully predict the other; other factors beyond team bonds are likely influencing how comfortable staff feel speaking up. Connectedness consistently exceeds empowerment across every subgroup examined (new, returning, campus, and remote staff alike), with the only near-exception being remote staff, where the two scores are equal (3.60).<br><br>
+          <strong>New vs. returning staff:</strong> New staff score lower on both connectedness (3.44 vs. 3.95) and empowerment (3.00 vs. 3.74), with the empowerment gap being the larger of the two. Early integration, building social bonds and feeling established within the team, may be especially important for psychological safety.<br><br>
+          <strong>On campus vs. remote staff:</strong> Campus and remote staff score similarly overall, but remote staff score slightly lower on connectedness (3.60 vs. 3.83) yet slightly higher on empowerment (3.60 vs. 3.48). With only 5 remote respondents this should be interpreted cautiously, but it may suggest that remote staff experience fewer in-group social dynamics that can sometimes suppress differing opinions.
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="chart-box" style="margin-bottom:1rem;">
-    <div class="chart-title">Mean scores by tenure group</div>
-    <div class="chart-sub">Connectedness and empowerment means per tenure group</div>
-    <div class="legend">
-      <span><span class="dot" style="background:#233C4D"></span>Connectedness</span>
-      <span><span class="dot" style="background:#427C7D"></span>Empowerment</span>
-    </div>
-    <div style="position:relative;height:160px;"><canvas id="tenureGrouped"></canvas></div>
-    <div id="tenureInsight" class="theme-box" style="margin-top:0.75rem;font-size:10.5px;color:#233C4D;line-height:1.55;"></div>
   </div>
 
   <hr class="divider">
