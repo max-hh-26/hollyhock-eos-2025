@@ -80,10 +80,75 @@
   /* --- Print button (hidden in print) --- */
   .print-btn-wrap { text-align: right; margin-bottom: 1rem; }
   @media print { .print-btn-wrap { display: none; } }
+
+  /* --- Typography --- */
+  body { orphans: 3; widows: 3; }
+
+  /* --- Section numbering --- */
+  .section-num { font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #427C7D; margin-bottom: 0.2rem; }
+
+  /* --- Keep-together utility --- */
+  .keep-together { break-inside: avoid; }
+
+  /* --- Data note (yellow warning) --- */
+  .data-note { background: #fff3cd; border-radius: 8px; padding: 0.65rem 0.85rem; margin-top: 0.75rem; }
+  .data-note-label { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #856404; margin-bottom: 3px; }
+  .data-note-text { font-size: 10.5px; color: #533f03; line-height: 1.5; }
+
+  /* --- YoY delta badge --- */
+  .card-delta { font-size: 9.5px; color: #888; margin-top: 3px; }
+  .card-delta.down { color: #CA5757; }
+  .card-delta.up { color: #427C7D; }
+
+  /* --- Cover page --- */
+  .cover-page { page-break-after: always; min-height: calc(11in - 1.3in); display: flex; flex-direction: column; justify-content: space-between; padding: 2rem 0 1.5rem; }
+  .cover-logo-area { margin-bottom: auto; }
+  .cover-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #427C7D; margin-bottom: 1.5rem; }
+  .cover-title { font-size: 38px; font-weight: 600; color: #233C4D; line-height: 1.15; margin-bottom: 0.6rem; }
+  .cover-subtitle { font-size: 13px; color: #555; font-weight: 400; margin-bottom: 2.5rem; }
+  .cover-rule { border: none; border-top: 2px solid #233C4D; margin-bottom: 1.5rem; }
+  .cover-meta-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+  .cover-meta-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #427C7D; margin-bottom: 3px; }
+  .cover-meta-val { font-size: 13px; font-weight: 600; color: #233C4D; }
+  .cover-description { font-size: 11px; color: #555; line-height: 1.7; max-width: 520px; }
+  .cover-footer { display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid #d0cfc8; padding-top: 0.75rem; }
+  .cover-footer-left { font-size: 9.5px; color: #888; }
+  .cover-footer-right { font-size: 9.5px; color: #888; text-align: right; }
+  .cover-accent-bar { width: 48px; height: 4px; background: #D6AD60; border-radius: 2px; margin-bottom: 1.25rem; }
 </style>
 </head>
 <body>
 <div class="page">
+
+  <!-- COVER PAGE -->
+  <div class="cover-page">
+    <div class="cover-logo-area">
+      <div class="cover-eyebrow">Hollyhock · Internal</div>
+      <div class="cover-accent-bar"></div>
+      <div class="cover-title">End of Season<br>Staff Survey 2025</div>
+      <div class="cover-subtitle">Annual staff feedback report — Hollyhock Leadership Centre</div>
+      <hr class="cover-rule">
+      <div class="cover-meta-grid">
+        <div>
+          <div class="cover-meta-label">Respondents</div>
+          <div class="cover-meta-val">28 staff</div>
+        </div>
+        <div>
+          <div class="cover-meta-label">Survey period</div>
+          <div class="cover-meta-val">End of season 2025</div>
+        </div>
+        <div>
+          <div class="cover-meta-label">Distribution</div>
+          <div class="cover-meta-val">Internal only</div>
+        </div>
+      </div>
+      <div class="cover-description">This report covers five sections: respondent profile, engagement and development, connectedness and empowerment, open-ended responses, and a cross-question synthesis. Theme and synthesis content is fully expanded. An appendix of all custom and open-ended responses follows the main report.</div>
+    </div>
+    <div class="cover-footer">
+      <div class="cover-footer-left">Hollyhock Leadership Centre · Cortes Island, BC</div>
+      <div class="cover-footer-right">Prepared April 2025 · Not for external distribution</div>
+    </div>
+  </div>
 
   <!-- Print button -->
   <div class="print-btn-wrap">
@@ -94,45 +159,77 @@
   <div style="margin-bottom:1.25rem;">
     <div style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#427C7D;margin-bottom:0.25rem;">Hollyhock · Internal</div>
     <div style="font-size:26px;font-weight:600;color:#233C4D;margin-bottom:0.5rem;">End of Season Staff Survey 2025</div>
-    <div style="font-size:10.5px;color:#555;line-height:1.65;">This document is the printable version of the 2025 end of season staff survey report. It covers five sections: respondent profile, engagement and development, connectedness and empowerment, open-ended responses, and a cross-question synthesis. All theme and synthesis content is fully expanded. An appendix of custom and open-ended responses follows the main report.</div>
+    <div style="font-size:10.5px;color:#555;line-height:1.65;">This document is the printable version of the 2025 end of season staff survey report. It covers five sections: respondent profile, engagement and development, connectedness and empowerment, open-ended responses, and a cross-question synthesis. Theme and synthesis content is fully expanded. An appendix of custom and open-ended responses follows the main report.</div>
   </div>
 
   <!-- STAT CARDS -->
   <div class="row3">
-    <div class="card"><div class="card-label">Total respondents</div><div class="card-val">28</div><div class="card-sub">2025 season</div></div>
-    <div class="card"><div class="card-label">On campus</div><div class="card-val">82.1%</div><div class="card-sub">23 of 28</div></div>
-    <div class="card"><div class="card-label">Seasonal staff</div><div class="card-val">67.9%</div><div class="card-sub">19 of 28</div></div>
+    <div class="card">
+      <div class="card-label">Total respondents</div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <div class="card-val">28</div>
+        <div style="font-size:10px;font-weight:700;color:#CA5757;">&#9660; 15 (2024)</div>
+      </div>
+      <div class="card-sub">2025 season</div>
+    </div>
+    <div class="card">
+      <div class="card-label">On campus</div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <div class="card-val">82.1%</div>
+        <div style="font-size:10px;font-weight:700;color:#CA5757;">&#9660; 8.6% (2024)</div>
+      </div>
+      <div class="card-sub">23 of 28</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Seasonal staff</div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <div class="card-val">67.9%</div>
+        <div style="font-size:10px;font-weight:700;color:#CA5757;">&#9660; 6.5% (2024)</div>
+      </div>
+      <div class="card-sub">19 of 28</div>
+    </div>
   </div>
 
   <hr class="divider">
 
   <!-- SECTION 1: RESPONDENT PROFILE -->
+  <div class="section-num">01 — Respondent Profile</div>
   <div class="section-title">Respondent Profile</div>
 
   <div class="row2">
     <div class="chart-box">
       <div class="chart-title">Seasons at Hollyhock</div>
-      <div class="legend">
-        <span><span class="dot" style="background:#233C4D"></span>1 year or less (32.1%)</span>
-        <span><span class="dot" style="background:#427C7D"></span>2–4 seasons (42.9%)</span>
-        <span><span class="dot" style="background:#D6AD60"></span>5–7 seasons (10.7%)</span>
-        <span><span class="dot" style="background:#CA5757"></span>8+ seasons (14.3%)</span>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:0.4rem;">
+        <div style="position:relative;height:150px;width:150px;flex:0 0 150px;"><canvas id="tenureChart"></canvas></div>
+        <div class="legend" style="flex:1;min-width:0;flex-direction:column;gap:7px;margin-bottom:0;">
+          <span style="white-space:nowrap;"><span class="dot" style="background:#233C4D"></span>1 year or less (32.1%)</span>
+          <span style="white-space:nowrap;"><span class="dot" style="background:#427C7D"></span>2–4 seasons (42.9%)</span>
+          <span style="white-space:nowrap;"><span class="dot" style="background:#D6AD60"></span>5–7 seasons (10.7%)</span>
+          <span style="white-space:nowrap;"><span class="dot" style="background:#CA5757"></span>8+ seasons (14.3%)</span>
+        </div>
       </div>
-      <div style="position:relative;height:150px;"><canvas id="tenureChart"></canvas></div>
     </div>
     <div class="chart-box">
       <div class="chart-title">New vs. returning staff</div>
-      <div class="legend">
-        <span><span class="dot" style="background:#233C4D"></span>Returning 67.9%</span>
-        <span><span class="dot" style="background:#D6AD60"></span>New 32.1%</span>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:0.4rem;">
+        <div style="position:relative;height:150px;width:150px;flex:0 0 150px;"><canvas id="newChart"></canvas></div>
+        <div class="legend" style="flex:1;min-width:0;flex-direction:column;gap:7px;margin-bottom:0;">
+          <span style="white-space:nowrap;"><span class="dot" style="background:#233C4D"></span>Returning (67.9%)</span>
+          <span style="white-space:nowrap;"><span class="dot" style="background:#D6AD60"></span>New (32.1%)</span>
+        </div>
       </div>
-      <div style="position:relative;height:150px;"><canvas id="newChart"></canvas></div>
     </div>
+  </div>
+
+  <div class="data-note">
+    <div class="data-note-label">Data note</div>
+    <div class="data-note-text">This survey reflects responses from 28 staff members. Given the small sample size, percentages and averages should be interpreted with caution. Patterns may not generalize beyond this group, and small changes in individual responses can meaningfully shift results.</div>
   </div>
 
   <hr class="divider">
 
   <!-- SECTION 2: ENGAGEMENT & DEVELOPMENT -->
+  <div class="section-num">02 — Engagement &amp; Development</div>
   <div class="section-title">Engagement &amp; Development</div>
 
   <div class="row2">
@@ -231,7 +328,8 @@
   <hr class="divider">
 
   <!-- SECTION 3: CONNECTEDNESS & EMPOWERMENT -->
-  <div class="section-title" style="page-break-before: always;">Connectedness &amp; Empowerment</div>
+  <div class="section-num" style="page-break-before: always;">03 — Connectedness &amp; Empowerment</div>
+  <div class="section-title">Connectedness &amp; Empowerment</div>
 
   <div class="chart-box" style="margin-bottom:1rem;">
     <div class="chart-title">Connectedness vs. empowerment</div>
@@ -290,7 +388,8 @@
   <hr class="divider">
 
   <!-- SECTION 4: OPEN-ENDED RESPONSES -->
-  <div class="section-title" style="page-break-before: always;">Open-Ended Responses</div>
+  <div class="section-num" style="page-break-before: always;">04 — Open-Ended Responses</div>
+  <div class="section-title">Open-Ended Responses</div>
 
   <!-- Q1 -->
   <div class="chart-box" style="margin-bottom:1rem;">
@@ -429,7 +528,8 @@
   <hr class="divider">
 
   <!-- SECTION 5: CROSS-QUESTION SYNTHESIS -->
-  <div class="section-title" style="page-break-before: always;">Signals Across the Dataset</div>
+  <div class="section-num" style="page-break-before: always;">05 — Cross-Question Synthesis</div>
+  <div class="section-title">Signals Across the Dataset</div>
 
   <div class="synth-grid">
     <div class="synth-card followup">
@@ -661,12 +761,12 @@ const jitter = () => (Math.random()-0.5)*0.18;
 // --- Respondent profile ---
 new Chart(document.getElementById('tenureChart'), {
   type: 'doughnut',
-  data: { labels: ['1 year or less','2–4 seasons','5–7 seasons','8+ seasons'], datasets: [{ data: [32.1,42.9,10.7,14.3], backgroundColor: ['#233C4D','#427C7D','#D6AD60','#CA5757'], borderWidth: 0 }] },
+  data: { labels: ['1 year or less','2–4 seasons','5–7 seasons','8+ seasons'], datasets: [{ data: [32.1,42.9,10.7,14.3], backgroundColor: ['#233C4D','#427C7D','#D6AD60','#CA5757'], borderWidth: 0, radius: '80%' }] },
   options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed + '%' } } } }
 });
 new Chart(document.getElementById('newChart'), {
   type: 'doughnut',
-  data: { labels: ['Returning','New'], datasets: [{ data: [67.9,32.1], backgroundColor: ['#233C4D','#D6AD60'], borderWidth: 0 }] },
+  data: { labels: ['Returning','New'], datasets: [{ data: [67.9,32.1], backgroundColor: ['#233C4D','#D6AD60'], borderWidth: 0, radius: '80%' }] },
   options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed + '%' } } } }
 });
 
